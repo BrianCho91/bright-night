@@ -1,16 +1,16 @@
-import Game from './game';
+
 
 class Player {
   constructor(options) {
-    this.pos = options.pos,
+    this.pos = this.pos || options.pos,
     this.vel = 1,
     this.width = 50,
     this.height = 50
-    this.color = options.color || "black"
+    this.color = options.color || "blue"
   };
 
   draw(ctx) {
-    ctx.clearRect(0, 0, 1000, 600)
+    // ctx.clearRect(0, 0, 1000, 600);
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
   };
