@@ -9,12 +9,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // test // 
   let player = new Player({ pos: [250,250] })
+  // let player1 = new Player({ pos: [150, 250] }) 
   // player.move("left")
   // player.jump()
-  let controller = new Controller(player, ctx)
-  controller.keyboardHandlers()
   player.draw(ctx);
+  let game = new Game()
+  // game.animate(ctx)
+  let controller = new Controller(player, ctx)
+  controller.keyboardHandlers(ctx)
   console.log(player.pos)
-
+  let loop
+  window.requestAnimationFrame(loop);
   // test //
 });

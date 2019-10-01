@@ -3,18 +3,18 @@ import Game from './game';
 class Player {
   constructor(options) {
     this.pos = options.pos,
-    this.vel = 8,
+    this.vel = 1,
     this.width = 50,
     this.height = 50
     this.color = options.color || "black"
   };
 
   draw(ctx) {
-    ctx.clearRect(0,0,1000,600)
+    ctx.clearRect(0, 0, 1000, 600)
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
   };
-
+  
   move(direction) {
     const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
     const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);

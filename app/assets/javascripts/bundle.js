@@ -136,6 +136,9 @@ class Controller {
           this.player.draw(this.ctx)
           break;
 
+        case  true && 39:
+          console.log('upright')
+          break;
         // case 13: // enter
         //   if (this.game.menu === true) {
 
@@ -164,11 +167,33 @@ class Controller {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
+
+
+
 class Game {
   constructor(options) {
-    
-  }
+    // this.player = new Player({ pos: [250, 250]})
+    // this.refresh = this.refresh.bind(this);
+    // this.drawPlayer = this.drawPlayer.bind(this)
+    // this.animate = this.animate.bind(this)
+    // this.controller = new Controller(this.player)
+  };
 
+  // refresh(ctx) {
+  //   ctx.clearRect(0, 0, 1000, 600)
+  // }
+
+  // drawPlayer(ctx) {
+  //   this.player.draw(ctx);
+  // }
+
+  // animate(ctx) {
+  //   this.refresh(ctx);
+  //   this.player.draw(ctx)
+  //   requestAnimationFrame(this.animate());
+  // }
 
 }
 
@@ -203,15 +228,20 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // test // 
   let player = new _player__WEBPACK_IMPORTED_MODULE_1__["default"]({ pos: [250,250] })
+  // let player1 = new Player({ pos: [150, 250] }) 
   // player.move("left")
   // player.jump()
-  let controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](player, ctx)
-  controller.keyboardHandlers()
   player.draw(ctx);
+  let game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"]()
+  // game.animate(ctx)
+  let controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](player, ctx)
+  controller.keyboardHandlers(ctx)
   console.log(player.pos)
-
+  let loop
+  window.requestAnimationFrame(loop);
   // test //
 });
+
 
 /***/ }),
 
@@ -230,18 +260,18 @@ __webpack_require__.r(__webpack_exports__);
 class Player {
   constructor(options) {
     this.pos = options.pos,
-    this.vel = 8,
+    this.vel = 1,
     this.width = 50,
     this.height = 50
     this.color = options.color || "black"
   };
 
   draw(ctx) {
-    ctx.clearRect(0,0,1000,600)
+    ctx.clearRect(0, 0, 1000, 600)
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
   };
-
+  
   move(direction) {
     const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
     const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);

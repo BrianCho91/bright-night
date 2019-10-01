@@ -38,6 +38,9 @@ class Controller {
           this.player.draw(this.ctx)
           break;
 
+        case 38 && 39:
+          console.log('upright')
+          break;
         // case 13: // enter
         //   if (this.game.menu === true) {
 
