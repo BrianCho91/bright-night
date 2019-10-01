@@ -86,18 +86,195 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/controller.js":
+/*!***************************!*\
+  !*** ./src/controller.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+
+
+class Controller {
+  constructor(player, ctx) {
+    this.player = player
+    this.ctx = ctx
+    this.keyboardHandlers = this.keyboardHandlers.bind(this);
+  }
+
+  keyboardHandlers() {
+    window.addEventListener("keydown", (e) => {
+      switch (e.keyCode) {
+        case 38: // up arrow
+          // console.log("w")
+          this.player.jump();
+          console.log(this.player.pos)
+          this.player.draw(this.ctx)
+          break;
+
+        case 40: // down arrow
+
+          this.player.move("down");
+          console.log(this.player.pos)
+          this.player.draw(this.ctx)
+          break;
+
+        case 37: // left arrow
+
+          this.player.move("left")
+          console.log(this.player.pos)
+          this.player.draw(this.ctx)
+          break;
+
+        case 39: // right arrow
+
+          this.player.move("right");
+          console.log(this.player.pos)
+          this.player.draw(this.ctx)
+          break;
+
+        // case 13: // enter
+        //   if (this.game.menu === true) {
+
+        //   } else {
+
+        //   }
+
+        default:
+          break;
+      }
+    })
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Controller);
+
+/***/ }),
+
+/***/ "./src/game.js":
+/*!*********************!*\
+  !*** ./src/game.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Game {
+  constructor(options) {
+    
+  }
+
+
+}
+
+const CONSTANTS = {
+  GRAVITY: 0.4
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Game);
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
+
+
+
 
 window.addEventListener("DOMContentLoaded", () => {
   console.log('working')
   const canvas = document.getElementById('game-canvas');
   const ctx = canvas.getContext('2d')
+
+  // test // 
+  let player = new _player__WEBPACK_IMPORTED_MODULE_1__["default"]({ pos: [250,250] })
+  // player.move("left")
+  // player.jump()
+  let controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](player, ctx)
+  controller.keyboardHandlers()
+  player.draw(ctx);
+  console.log(player.pos)
+
+  // test //
 });
+
+/***/ }),
+
+/***/ "./src/player.js":
+/*!***********************!*\
+  !*** ./src/player.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+
+
+class Player {
+  constructor(options) {
+    this.pos = options.pos,
+    this.vel = 8,
+    this.width = 50,
+    this.height = 50
+    this.color = options.color || "black"
+  };
+
+  draw(ctx) {
+    ctx.clearRect(0,0,1000,600)
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
+  };
+
+  move(direction) {
+    const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
+    const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);
+    const newPos = [newX, newY];
+    this.pos = newPos
+  };
+
+  jump() {
+    const posX = this.pos[0];
+    const newY = this.pos[1] - 40;
+
+    const newPos = [posX, newY]
+    this.pos = newPos
+  }
+
+};
+
+
+
+Player.MOVES = {
+  "up" : [0, -1],
+  "down": [0, 1],
+  "left": [-1, 0],
+  "right": [1, 0],
+
+  "up-left": [-1,-1],
+  "up-right": [1, -1],
+  "down-left": [-1, 1],
+  "down-right": [1, 1]
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (Player);
 
 /***/ })
 
