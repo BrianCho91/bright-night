@@ -12,7 +12,7 @@ class Game {
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
     this.map = new Map(levels[1].tiles, this);
-    this.player = new Player();
+    this.player = new Player(this.map);
     this.controller = new Controller(this.player, this.map, this.ctx);
     this.tiles = [];
 

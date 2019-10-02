@@ -93,7 +93,7 @@ class Controller {
         // case 32: // space
         //   this.map.flipMap(this.ctx);
 
-        // case 38 && 39: // doesnt work
+        // case 38 && 39: // doeswnt work
         //   console.log('upright')
         //   break;
 

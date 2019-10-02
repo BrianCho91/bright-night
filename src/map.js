@@ -42,6 +42,19 @@ class Map {
   }
 
 
+  collidingWithMap(player) {
+    // debugger
+    return this.tiles.some(tile => {
+      return !(
+        (
+          player.x < tile.topLeft.x ||
+          player.x > tile.botRight.x ||
+          player.y < tile.topLeft.y ||
+          player.y > tile.botRight.y
+          )
+      )
+    })
+  }
 }
 
 // Map.LEVELS = {

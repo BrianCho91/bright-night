@@ -8,6 +8,14 @@ class Tile {
       this.color = color,
       this.pos = pos,
       this.game = game
+      this.topLeft = {
+        x: pos.x,
+        y: pos.y - this.height
+      }
+      this.botRight = {
+        x: pos.x + this.width,
+        y: pos.y
+      }
     // this.pos = {
     //   x: 250, // change to level start later
     //   y: 250
@@ -35,25 +43,25 @@ class Tile {
       this.game.player.velY = 0
     }
 
-      // if 
-      //   (
-      //     detectCollisionLeft(this.game.player, this) &&
-      //     this.color === "black"
-      //   ) {
-      //   console.log(this)
-      //   // console.log(this.game.player)
-      //     this.game.player.velX = 0;
-      //   }
-      }
-    //   // if (detectCollisionX(this, this.game.player)) {
-    //   //   console.log('x')
-    //   //   this.game.player.velX = 0;
-    //   // }
+    // if 
+    //   (
+    //     detectCollisionLeft(this.game.player, this) &&
+    //     this.color === "black"
+    //   ) {
+    //   console.log(this)
+    //   // console.log(this.game.player)
+    //     this.game.player.velX = 0;
+    //   }
+  }
+  //   // if (detectCollisionX(this, this.game.player)) {
+  //   //   console.log('x')
+  //   //   this.game.player.velX = 0;
+  //   // }
 
-    // if (detectCollision(this, this.game.player) && this.color === "black") {
-    //   console.log(this.pos)
-    //   this.game.player.velY = 0
-    // }
+  // if (detectCollision(this, this.game.player) && this.color === "black") {
+  //   console.log(this.pos)
+  //   this.game.player.velY = 0
+  // }
 
   // }
 

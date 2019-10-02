@@ -1,7 +1,8 @@
 import { detectCollisionLeft } from './collision';
+import Map from './map';
 
 class Player {
-  constructor() {
+  constructor(map) {
     this.width = 50,
       this.height = 50,
       this.color = "blue",
@@ -14,7 +15,15 @@ class Player {
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
-
+    this.topLeft = {
+      x: this.pos.x,
+      y: this.pos.y - this.height
+    }
+    this.botRight = {
+      x: this.pos.x + this.width,
+      y: this.pos.y
+    }
+    this.map = map;
 
   }
 
@@ -25,6 +34,11 @@ class Player {
   }
 
   moveLeft() {
+    debugger
+    if (this.map.collidingWithMap(this.topLeft)) {
+      console.log('hi')  
+      return
+    }
     this.velX = -this.maxVelX
   }
 

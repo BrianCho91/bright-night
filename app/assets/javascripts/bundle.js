@@ -8604,12 +8604,9 @@ function extend() {
 /*!**************************!*\
   !*** ./src/collision.js ***!
   \**************************/
-/*! exports provided: detectCollision */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "detectCollision", function() { return detectCollision; });
 // export function detectCollisionTop(tile, player) {
 //   // console.log('hi')
 //   // debugger
@@ -8695,29 +8692,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function detectCollision(tile, player) {
-  // console.log('hi')
-  let topOfPlayer = player.pos.y;
-  let leftOfPlayer = player.pos.x
-  let botOfPlayer = player.pos.y + player.height;
-  let rightOfPlayer = player.pos.x + player.width;
+// export function detectCollision(tile, player) {
+//   // console.log('hi')
+//   let topOfPlayer = player.pos.y;
+//   let leftOfPlayer = player.pos.x
+//   let botOfPlayer = player.pos.y + player.height;
+//   let rightOfPlayer = player.pos.x + player.width;
 
-  let topOfTile = tile.pos.y;
-  let leftOfTile = tile.pos.x;
-  let botOfTile = tile.pos.y + tile.height;
-  let rightOfTile = tile.pos.x + tile.width;
+//   let topOfTile = tile.pos.y;
+//   let leftOfTile = tile.pos.x;
+//   let botOfTile = tile.pos.y + tile.height;
+//   let rightOfTile = tile.pos.x + tile.width;
 
-  if (
-    botOfPlayer >= topOfTile &&
-    topOfPlayer <= botOfTile &&
-    leftOfPlayer >= leftOfTile &&
-    rightOfPlayer <= rightOfTile
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
+//   if (
+//     botOfPlayer >= topOfTile &&
+//     topOfPlayer <= botOfTile &&
+//     leftOfPlayer >= leftOfTile &&
+//     rightOfPlayer <= rightOfTile
+//   ) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
 // export function detectCollision(player, tile) {
 //   let tilePosX = tile.pos.x;
@@ -8858,7 +8855,7 @@ class Controller {
         // case 32: // space
         //   this.map.flipMap(this.ctx);
 
-        // case 38 && 39: // doesnt work
+        // case 38 && 39: // doeswnt work
         //   console.log('upright')
         //   break;
 
@@ -8908,7 +8905,7 @@ class Game {
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
     this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
-    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](this.map);
     this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx);
     this.tiles = [];
 
@@ -9215,6 +9212,19 @@ class Map {
   }
 
 
+  collidingWithMap(player) {
+    // debugger
+    return this.tiles.some(tile => {
+      return !(
+        (
+          player.x < tile.topLeft.x ||
+          player.x > tile.botRight.x ||
+          player.y < tile.topLeft.y ||
+          player.y > tile.botRight.y
+          )
+      )
+    })
+  }
 }
 
 // Map.LEVELS = {
@@ -9248,10 +9258,13 @@ class Map {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collision */ "./src/collision.js");
+/* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_collision__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map */ "./src/map.js");
+
 
 
 class Player {
-  constructor() {
+  constructor(map) {
     this.width = 50,
       this.height = 50,
       this.color = "blue",
@@ -9264,7 +9277,15 @@ class Player {
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
-
+    this.topLeft = {
+      x: this.pos.x,
+      y: this.pos.y - this.height
+    }
+    this.botRight = {
+      x: this.pos.x + this.width,
+      y: this.pos.y
+    }
+    this.map = map;
 
   }
 
@@ -9275,6 +9296,11 @@ class Player {
   }
 
   moveLeft() {
+    debugger
+    if (this.map.collidingWithMap(this.topLeft)) {
+      console.log('hi')  
+      return
+    }
     this.velX = -this.maxVelX
   }
 
@@ -9401,6 +9427,7 @@ class Player {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collision */ "./src/collision.js");
+/* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_collision__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class Tile {
@@ -9411,6 +9438,14 @@ class Tile {
       this.color = color,
       this.pos = pos,
       this.game = game
+      this.topLeft = {
+        x: pos.x,
+        y: pos.y - this.height
+      }
+      this.botRight = {
+        x: pos.x + this.width,
+        y: pos.y
+      }
     // this.pos = {
     //   x: 250, // change to level start later
     //   y: 250
@@ -9438,25 +9473,25 @@ class Tile {
       this.game.player.velY = 0
     }
 
-      // if 
-      //   (
-      //     detectCollisionLeft(this.game.player, this) &&
-      //     this.color === "black"
-      //   ) {
-      //   console.log(this)
-      //   // console.log(this.game.player)
-      //     this.game.player.velX = 0;
-      //   }
-      }
-    //   // if (detectCollisionX(this, this.game.player)) {
-    //   //   console.log('x')
-    //   //   this.game.player.velX = 0;
-    //   // }
+    // if 
+    //   (
+    //     detectCollisionLeft(this.game.player, this) &&
+    //     this.color === "black"
+    //   ) {
+    //   console.log(this)
+    //   // console.log(this.game.player)
+    //     this.game.player.velX = 0;
+    //   }
+  }
+  //   // if (detectCollisionX(this, this.game.player)) {
+  //   //   console.log('x')
+  //   //   this.game.player.velX = 0;
+  //   // }
 
-    // if (detectCollision(this, this.game.player) && this.color === "black") {
-    //   console.log(this.pos)
-    //   this.game.player.velY = 0
-    // }
+  // if (detectCollision(this, this.game.player) && this.color === "black") {
+  //   console.log(this.pos)
+  //   this.game.player.velY = 0
+  // }
 
   // }
 

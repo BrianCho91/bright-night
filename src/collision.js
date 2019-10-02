@@ -83,29 +83,29 @@
 
 
 
-export function detectCollision(tile, player) {
-  // console.log('hi')
-  let topOfPlayer = player.pos.y;
-  let leftOfPlayer = player.pos.x
-  let botOfPlayer = player.pos.y + player.height;
-  let rightOfPlayer = player.pos.x + player.width;
+// export function detectCollision(tile, player) {
+//   // console.log('hi')
+//   let topOfPlayer = player.pos.y;
+//   let leftOfPlayer = player.pos.x
+//   let botOfPlayer = player.pos.y + player.height;
+//   let rightOfPlayer = player.pos.x + player.width;
 
-  let topOfTile = tile.pos.y;
-  let leftOfTile = tile.pos.x;
-  let botOfTile = tile.pos.y + tile.height;
-  let rightOfTile = tile.pos.x + tile.width;
+//   let topOfTile = tile.pos.y;
+//   let leftOfTile = tile.pos.x;
+//   let botOfTile = tile.pos.y + tile.height;
+//   let rightOfTile = tile.pos.x + tile.width;
 
-  if (
-    botOfPlayer >= topOfTile &&
-    topOfPlayer <= botOfTile &&
-    leftOfPlayer >= leftOfTile &&
-    rightOfPlayer <= rightOfTile
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
+//   if (
+//     botOfPlayer >= topOfTile &&
+//     topOfPlayer <= botOfTile &&
+//     leftOfPlayer >= leftOfTile &&
+//     rightOfPlayer <= rightOfTile
+//   ) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
 // export function detectCollision(player, tile) {
 //   let tilePosX = tile.pos.x;
