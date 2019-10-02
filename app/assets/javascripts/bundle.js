@@ -8609,7 +8609,8 @@ function extend() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player1 */ "./src/player1.js");
+/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_player1__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map */ "./src/map.js");
 
 
@@ -8624,34 +8625,72 @@ class Controller {
   }
 
   keyboardHandlers() {
-    window.addEventListener("keydown", (e) => {
+
+    document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
-        case 38: // up arrow
+        case  true && 87: // up arrow
           // console.log("w")
           this.player.jump();
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
           break;
 
-        case 40: // down arrow
+        case  true && 83: // down arrow
 
           this.player.move("down");
           console.log(this.player.pos)
           this.player.draw(this.ctx)
           break;
 
-        case 37: // left arrow
+        case  true && 65: // left arrow
 
-          this.player.move("left")
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          this.player.moveLeft();
           break;
 
-        case 39: // right arrow
+        case  true && 68: // right arrow
 
-          this.player.move("right");
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          this.player.moveRight();
+          break;
+
+        case 32: // space
+          this.map.flipMap();
+
+        // case 38 && 39: // doesnt work
+        //   console.log('upright')
+        //   break;
+
+        // case 13: // enter
+        //   if (this.game.menu === true) {
+
+        //   } else {
+
+        //   }
+
+        default:
+          break;
+      }
+    })
+
+    document.addEventListener("keyup", (e) => {
+      switch (e.keyCode) {
+        case  true && 87: // up arrow
+          // console.log("w")
+          if (this.player.velY < 5)
+            this.player.comeDown()
+          break;
+
+        case  true && 83: // down arrow
+
+          if (this.player.velY > 0)
+            this.player.stop();
+          break;
+
+        case  true && 65: // left arrow
+          if (this.player.velX < 0)
+            this.player.stop();
+          break;
+
+        case  true && 68: // right arrow
+          if (this.player.velX > 0)
+            this.player.stop();
           break;
 
         case 32: // space
@@ -8673,7 +8712,6 @@ class Controller {
       }
     })
   }
-
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Controller);
@@ -8698,21 +8736,50 @@ __webpack_require__.r(__webpack_exports__);
 
 class Game {
   constructor(ctx) {
-    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
-    // debugger
-    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]( {pos: this.map.startingPos});
-    // this.controller = new Controller(this.player, this.map, ctx)
-    // this.keyboardHandlers(ctx)
-    this.render(ctx);
+    this.ctx = ctx;
+    // this.map = new Map(ctx);
+    // // debugger
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player);
+    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"]()
+    // // this.controller = new Controller(this.player, this.map, ctx)
+    // // this.keyboardHandlers(ctx)
+    // this.render(ctx);
   };
 
-  render(ctx) {
-    // debugger
+  draw(ctx) {
     ctx.clearRect(0, 0, 1000, 600)
-
     this.map.render(ctx)
     this.player.draw(ctx)
   }
+
+  start() {
+    this.lastTime = 0;
+    this.controller.keyboardHandlers();
+    requestAnimationFrame(this.animate.bind(this))
+  }
+
+  animate(time) {
+    const dt = time - this.lastTime;
+    this.draw(this.ctx)
+    this.player.update(dt)
+    this.lastTime = time;
+
+    requestAnimationFrame(this.animate.bind(this))
+  }
+
+  // draw(ctx) {
+  //   console.log('cear')
+  //   ctx.clearRect(0, 0, 1000, 600)
+  // }
+
+  // render(ctx) {
+  //   // debugger
+  //   ctx.clearRect(0, 0, 1000, 600)
+
+  //   this.map.render(ctx)
+  //   this.player.draw(ctx)
+  // }
 }
 
 const CONSTANTS = {
@@ -8743,36 +8810,43 @@ __webpack_require__.r(__webpack_exports__);
 class GameView {
   constructor(ctx) {
     this.game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx)
-    this.controller = new _controller__WEBPACK_IMPORTED_MODULE_1__["default"](this.game.player, this.game.map, ctx)
-    this.keyboardHandlers(ctx);
+    // this.controller = new Controller(this.game.player, this.game.map, ctx)
+    // this.keyboardHandlers(ctx);
   }
 
-  render(ctx) {
-    // debugger
-    ctx.clearRect(0, 0, 1000, 600)
+  // animate(time) {
+  //   const timeDelta
+  // }
 
-    this.map.render(ctx)
-    this.player.draw(ctx)
-  }
+  // render(ctx) {
+  //   // debugger
+  //   ctx.clearRect(0, 0, 1000, 600)
+
+  //   this.map.render(ctx)
+  //   this.player.draw(ctx)
+  // }
 
 
 
-  keyboardHandlers(ctx) {
-    console.log('clear')
-    ctx.clearRect(0, 0, 1000, 600);
-    this.controller.keyboardHandlers()
-    this.game.render(ctx)
-  }
+  // keyboardHandlers(ctx) {
+  //   console.log('clear')
+  //   ctx.clearRect(0, 0, 1000, 600);
+  //   this.controller.keyboardHandlers()
+  //   this.game.render(ctx)
+  // }
 
-  animate() {
-    ctx.clearRect(0, 0, 1000, 600);
-    requestAnimationFrame(this.animate.bind(this))
-  }
+  // animate() {
+  //   ctx.clearRect(0, 0, 1000, 600);
+  //   requestAnimationFrame(this.animate.bind(this))
+  // }
 
-  start(ctx) {
-    this.keyboardHandlers(ctx);
-    this.animate();
-  }
+  // start(ctx) {
+  //   let that = this;
+  //   // this.keyboardHandlers(ctx);
+  //   // this.animate();
+
+
+  // }
 
 }
 
@@ -8789,7 +8863,8 @@ class GameView {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player1 */ "./src/player1.js");
+/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_player1__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ "./src/game.js");
 /* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
 /* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map */ "./src/map.js");
@@ -8807,8 +8882,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext('2d')
 
   // let game = new Game(ctx);
-  let gameView = new _game_view__WEBPACK_IMPORTED_MODULE_4__["default"](ctx);
-  gameView.start(ctx);
+  let game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
+  game.start()
+  // gameView.start(ctx);
 
   // test // 
   // let player = new Player({ pos: [250,250] })
@@ -8840,13 +8916,13 @@ window.addEventListener("DOMContentLoaded", () => {
 __webpack_require__.r(__webpack_exports__);
 
 class Map {
-  constructor(ctx) {
+  constructor() {
     this.level = Map.LEVELS[1];
     this.layout = Map.LEVELS[1].tiles;
     this.startingPos = Map.LEVELS[1].startingPos;
     // this.flipMap();
     // this.render(ctx);
-    this.render(ctx);
+    // this.render(ctx);
   }
 
   draw(ctx, posX, posY, tile) {
@@ -8925,56 +9001,131 @@ Map.LEVELS = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-
-
 class Player {
-  constructor(options) {
-    this.pos = this.pos || options.pos,
-    this.vel = 1,
+  constructor() {
     this.width = 50,
-    this.height = 50
-    this.color = options.color || "blue"
-  };
-
-  draw(ctx) {
-    // ctx.clearRect(0, 0, 1000, 600);
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
-  };
-  
-  move(direction) {
-    const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
-    const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);
-    const newPos = [newX, newY];
-    this.pos = newPos
-  };
-
-  jump() {
-    const posX = this.pos[0];
-    const newY = this.pos[1] - 40;
-
-    const newPos = [posX, newY]
-    this.pos = newPos
+    this.height = 50,
+    this.color = "blue",
+    this.pos = {
+      x: 250, // change to level start later
+      y: 250
+    }
+    this.velX = 0;
+    this.maxVelX = 3;
+    this.velY = 5;
+    this.maxVelY = 5;
   }
 
-};
+  draw(ctx) {
+    // console.log('j')
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
+  }
 
+  moveLeft() {
+    this.velX = -this.maxVelX
+  }
 
+  moveRight() {
+    this.velX = this.maxVelX
+  }
 
-Player.MOVES = {
-  "up" : [0, -1],
-  "down": [0, 1],
-  "left": [-1, 0],
-  "right": [1, 0],
+  jump() {
+    if (this.pos.y === 600 - this.height) 
+      this.velY = -this.maxVelY
+  }
 
-  "up-left": [-1,-1],
-  "up-right": [1, -1],
-  "down-left": [-1, 1],
-  "down-right": [1, 1]
-};
+  comeDown() {
+    this.velY = 5
+  }
 
+  stop() {
+    this.velX = 0;
+  }
+
+  update(dt) {
+    // console.log('1')
+    if (!dt) return
+
+    this.pos.x += this.velX
+    this.pos.x += this.velX
+    this.pos.y += this.velY
+
+    if (this.pos.y + this.height > 600)
+      this.pos.y = 600 - this.height
+  }
+  
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (Player);
+
+/***/ }),
+
+/***/ "./src/player1.js":
+/*!************************!*\
+  !*** ./src/player1.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+// class Player {
+//   constructor(options) {
+//     this.pos = this.pos || options.pos,
+//     this.initVel = 0,
+//     this.maxVel = 4
+//     this.width = 50,
+//     this.height = 50
+//     this.color = options.color || "blue"
+//   };
+
+//   draw(ctx) {
+//     // ctx.clearRect(0, 0, 1000, 600);
+//     ctx.fillStyle = this.color;
+//     ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
+//   };
+  
+//   move(direction) {
+//     const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
+//     const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);
+//     const newPos = [newX, newY];
+//     this.pos = newPos
+//   };
+
+//   jump() {
+//     const posX = this.pos[0];
+//     const newY = this.pos[1] - 40;
+
+//     const newPos = [posX, newY]
+//     this.pos = newPos
+//   }
+
+//   update(deltaTime) {
+//     if (!deltaTime) return;
+
+//     this.pos[0] = this.pos[0]
+//     this.pos[1] = this.pos[1]
+//   }
+
+// };
+
+
+
+// Player.MOVES = {
+//   "up" : [0, -1],
+//   "down": [0, 1],
+//   "left": [-1, 0],
+//   "right": [1, 0],
+
+//   "up-left": [-1,-1],
+//   "up-right": [1, -1],
+//   "down-left": [-1, 1],
+//   "down-right": [1, 1]
+// };
+
+
+// export default Player;
 
 /***/ }),
 

@@ -1,4 +1,4 @@
-import Player from './player';
+import Player from './player1';
 import Map from './map';
 
 class Controller {
@@ -11,34 +11,72 @@ class Controller {
   }
 
   keyboardHandlers() {
-    window.addEventListener("keydown", (e) => {
+
+    document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
-        case 38: // up arrow
+        case 38 && 87: // up arrow
           // console.log("w")
           this.player.jump();
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
           break;
 
-        case 40: // down arrow
+        case 40 && 83: // down arrow
 
           this.player.move("down");
           console.log(this.player.pos)
           this.player.draw(this.ctx)
           break;
 
-        case 37: // left arrow
+        case 37 && 65: // left arrow
 
-          this.player.move("left")
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          this.player.moveLeft();
           break;
 
-        case 39: // right arrow
+        case 39 && 68: // right arrow
 
-          this.player.move("right");
-          console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          this.player.moveRight();
+          break;
+
+        case 32: // space
+          this.map.flipMap();
+
+        // case 38 && 39: // doesnt work
+        //   console.log('upright')
+        //   break;
+
+        // case 13: // enter
+        //   if (this.game.menu === true) {
+
+        //   } else {
+
+        //   }
+
+        default:
+          break;
+      }
+    })
+
+    document.addEventListener("keyup", (e) => {
+      switch (e.keyCode) {
+        case 38 && 87: // up arrow
+          // console.log("w")
+          if (this.player.velY < 5)
+            this.player.comeDown()
+          break;
+
+        case 40 && 83: // down arrow
+
+          if (this.player.velY > 0)
+            this.player.stop();
+          break;
+
+        case 37 && 65: // left arrow
+          if (this.player.velX < 0)
+            this.player.stop();
+          break;
+
+        case 39 && 68: // right arrow
+          if (this.player.velX > 0)
+            this.player.stop();
           break;
 
         case 32: // space
@@ -60,7 +98,6 @@ class Controller {
       }
     })
   }
-
 }
 
 export default Controller;

@@ -1,12 +1,12 @@
 
 class Map {
-  constructor(ctx) {
+  constructor() {
     this.level = Map.LEVELS[1];
     this.layout = Map.LEVELS[1].tiles;
     this.startingPos = Map.LEVELS[1].startingPos;
     // this.flipMap();
     // this.render(ctx);
-    this.render(ctx);
+    // this.render(ctx);
   }
 
   draw(ctx, posX, posY, tile) {

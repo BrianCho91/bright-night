@@ -1,5 +1,5 @@
 
-import Player from './player';
+import Player from './player1';
 import Game from './game';
 import Controller from './controller';
 import Map from './map';
@@ -11,8 +11,9 @@ window.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext('2d')
 
   // let game = new Game(ctx);
-  let gameView = new GameView(ctx);
-  gameView.start(ctx);
+  let game = new Game(ctx);
+  game.start()
+  // gameView.start(ctx);
 
   // test // 
   // let player = new Player({ pos: [250,250] })

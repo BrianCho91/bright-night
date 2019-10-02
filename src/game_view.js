@@ -5,36 +5,43 @@ import { request } from 'http';
 class GameView {
   constructor(ctx) {
     this.game = new Game(ctx)
-    this.controller = new Controller(this.game.player, this.game.map, ctx)
-    this.keyboardHandlers(ctx);
+    // this.controller = new Controller(this.game.player, this.game.map, ctx)
+    // this.keyboardHandlers(ctx);
   }
 
-  render(ctx) {
-    // debugger
-    ctx.clearRect(0, 0, 1000, 600)
+  // animate(time) {
+  //   const timeDelta
+  // }
 
-    this.map.render(ctx)
-    this.player.draw(ctx)
-  }
+  // render(ctx) {
+  //   // debugger
+  //   ctx.clearRect(0, 0, 1000, 600)
+
+  //   this.map.render(ctx)
+  //   this.player.draw(ctx)
+  // }
 
 
 
-  keyboardHandlers(ctx) {
-    console.log('clear')
-    ctx.clearRect(0, 0, 1000, 600);
-    this.controller.keyboardHandlers()
-    this.game.render(ctx)
-  }
+  // keyboardHandlers(ctx) {
+  //   console.log('clear')
+  //   ctx.clearRect(0, 0, 1000, 600);
+  //   this.controller.keyboardHandlers()
+  //   this.game.render(ctx)
+  // }
 
-  animate() {
-    ctx.clearRect(0, 0, 1000, 600);
-    requestAnimationFrame(this.animate.bind(this))
-  }
+  // animate() {
+  //   ctx.clearRect(0, 0, 1000, 600);
+  //   requestAnimationFrame(this.animate.bind(this))
+  // }
 
-  start(ctx) {
-    this.keyboardHandlers(ctx);
-    this.animate();
-  }
+  // start(ctx) {
+  //   let that = this;
+  //   // this.keyboardHandlers(ctx);
+  //   // this.animate();
+
+
+  // }
 
 }
 

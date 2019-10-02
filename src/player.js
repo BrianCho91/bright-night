@@ -1,50 +1,57 @@
-
-
 class Player {
-  constructor(options) {
-    this.pos = this.pos || options.pos,
-    this.vel = 1,
+  constructor() {
     this.width = 50,
-    this.height = 50
-    this.color = options.color || "blue"
-  };
-
-  draw(ctx) {
-    // ctx.clearRect(0, 0, 1000, 600);
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
-  };
-  
-  move(direction) {
-    const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
-    const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);
-    const newPos = [newX, newY];
-    this.pos = newPos
-  };
-
-  jump() {
-    const posX = this.pos[0];
-    const newY = this.pos[1] - 40;
-
-    const newPos = [posX, newY]
-    this.pos = newPos
+    this.height = 50,
+    this.color = "blue",
+    this.pos = {
+      x: 250, // change to level start later
+      y: 250
+    }
+    this.velX = 0;
+    this.maxVelX = 3;
+    this.velY = 5;
+    this.maxVelY = 5;
   }
 
-};
+  draw(ctx) {
+    // console.log('j')
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
+  }
 
+  moveLeft() {
+    this.velX = -this.maxVelX
+  }
 
+  moveRight() {
+    this.velX = this.maxVelX
+  }
 
-Player.MOVES = {
-  "up" : [0, -1],
-  "down": [0, 1],
-  "left": [-1, 0],
-  "right": [1, 0],
+  jump() {
+    if (this.pos.y === 600 - this.height) 
+      this.velY = -this.maxVelY
+  }
 
-  "up-left": [-1,-1],
-  "up-right": [1, -1],
-  "down-left": [-1, 1],
-  "down-right": [1, 1]
-};
+  comeDown() {
+    this.velY = 5
+  }
 
+  stop() {
+    this.velX = 0;
+  }
+
+  update(dt) {
+    // console.log('1')
+    if (!dt) return
+
+    this.pos.x += this.velX
+    this.pos.x += this.velX
+    this.pos.y += this.velY
+
+    if (this.pos.y + this.height > 600)
+      this.pos.y = 600 - this.height
+  }
+  
+}
 
 export default Player;
