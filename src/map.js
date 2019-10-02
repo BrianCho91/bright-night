@@ -6,29 +6,30 @@ class Map {
     this.startingPos = Map.LEVELS[1].startingPos;
     this.flipMap = this.flipMap.bind(this);
     this.ctx = ctx
+    let tiles = [];
     // this.flipMap();
     // this.render(ctx);
     // this.render(ctx);
   }
 
-  draw(ctx, posX, posY, tile) {
-    // debugger
-    let size;
-    let color;
-    if (tile === 1) {
-      size = [100, 100];
-      color = "black";
-    } else if (tile === 2) {
-      size = [100, 20];
-      color = "grey"
-    } else if (tile === 3) {
-      size = [100, 20];
-      color = "lightgrey"
-    }
+  // draw(ctx, posX, posY, tile) {
+  //   // debugger
+  //   let size;
+  //   let color;
+  //   if (tile === 1) {
+  //     size = [100, 100];
+  //     color = "black";
+  //   } else if (tile === 2) {
+  //     size = [100, 20];
+  //     color = "grey"
+  //   } else if (tile === 3) {
+  //     size = [100, 20];
+  //     color = "lightgrey"
+  //   }
 
-    ctx.fillStyle = color
-    ctx.fillRect(posX, posY, size[0], size[1]);
-  };
+  //   ctx.fillStyle = color
+  //   ctx.fillRect(posX, posY, size[0], size[1]);
+  // };
 
   render(ctx) {
     // console.log('rendered')
@@ -43,19 +44,19 @@ class Map {
     }
   }
 
-  flipMap(map, ctx) {
-    // console.log("flipped")
-    // debugger
-    for (let i = 0; i < this.layout.length; i++) {
-      let tile = this.layout[i];
-      if (this.layout[i] === 2) {
-        this.level[i] = 3
-      } else if (this.layout[i] === 3) {
-        this.level[i] = 2
-      }
-    }
-    console.log(this.layout)
-  }
+  // flipMap(map, ctx) {
+  //   console.log("flipped")
+  //   // debugger
+  //   for (let i = 0; i < this.layout.length; i++) {
+  //     let tile = this.layout[i];
+  //     if (this.layout[i] === 2) {
+  //       this.layout[i] = 3
+  //     } else if (this.layout[i] === 3) {
+  //       this.layout[i] = 2
+  //     }
+  //   }
+  //   console.log(this.layout)
+  // }
 
 }
 

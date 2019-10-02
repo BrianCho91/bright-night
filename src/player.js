@@ -1,16 +1,20 @@
+import { detectCollision } from './collision';
+
 class Player {
   constructor() {
     this.width = 50,
-    this.height = 50,
-    this.color = "blue",
-    this.pos = {
-      x: 250, // change to level start later
-      y: 250
-    }
+      this.height = 50,
+      this.color = "blue",
+      this.pos = {
+        x: 250, // change to level start later
+        y: 250
+      }
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 5;
     this.maxVelY = 5;
+    this.jumping = false
+
   }
 
   draw(ctx) {
@@ -28,11 +32,15 @@ class Player {
   }
 
   jump() {
-    if (this.pos.y === 600 - this.height) 
+    if (this.pos.y === 600 - this.height)
+      // if (!this.jumping) {
+      this.jumping = true
       this.velY = -this.maxVelY
+    // }
   }
 
   comeDown() {
+    this.jumping = false
     this.velY = 5
   }
 
@@ -41,17 +49,23 @@ class Player {
   }
 
   update(dt) {
-    // console.log('1')
+    // console.log(this.pos)
     if (!dt) return
 
     this.pos.x += this.velX
     this.pos.x += this.velX
     this.pos.y += this.velY
 
-    if (this.pos.y + this.height > 600)
-      this.pos.y = 600 - this.height
+    // if (this.pos.y + this.height > 600) {
+    //   this.pos.y = 600 - this.height
+    // }
+
   }
-  
+
+
+
+
+
 }
 
 export default Player;

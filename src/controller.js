@@ -13,10 +13,19 @@ class Controller {
 
   keyboardHandlers() {
 
+    // document.addEventListener("keypress", (e) => {
+    //   if (e.keyCode === 38 || 87) {
+    //     this.player.jumping = false;
+    //     this.player.jump();
+    //     // break;
+    //   }
+    // })
+
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
         case 38 && 87: // up arrow
           // console.log("w")
+          this.player.jumping = false;
           this.player.jump();
           break;
 
@@ -57,6 +66,7 @@ class Controller {
     })
 
     document.addEventListener("keyup", (e) => {
+      // debugger
       switch (e.keyCode) {
         case 38 && 87: // up arrow
           // console.log("w")
@@ -80,8 +90,8 @@ class Controller {
             this.player.stop();
           break;
 
-        case 32: // space
-          this.map.flipMap(this.ctx);
+        // case 32: // space
+        //   this.map.flipMap(this.ctx);
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')
