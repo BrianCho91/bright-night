@@ -7,6 +7,7 @@ class Controller {
     this.map = map;
     this.ctx = ctx
     this.keyboardHandlers = this.keyboardHandlers.bind(this);
+
     // this.keyboardHandlers();
   }
 
@@ -22,13 +23,13 @@ class Controller {
         case 40 && 83: // down arrow
 
           this.player.move("down");
-          console.log(this.player.pos)
+          // console.log(this.player.pos)
           this.player.draw(this.ctx)
           break;
 
         case 37 && 65: // left arrow
 
-          this.player.moveLeft();
+          this.player.moveLeft(); 
           break;
 
         case 39 && 68: // right arrow
@@ -37,7 +38,7 @@ class Controller {
           break;
 
         case 32: // space
-          this.map.flipMap();
+          this.map.flipMap(this.map);
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')

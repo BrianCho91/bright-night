@@ -8,8 +8,8 @@ class Game {
     // this.map = new Map(ctx);
     // // debugger
     this.player = new Player();
-    this.controller = new Controller(this.player);
-    this.map = new Map()
+    this.map = new Map(this.ctx)
+    this.controller = new Controller(this.player, this.map, this.ctx);
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);

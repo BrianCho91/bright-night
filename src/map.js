@@ -1,15 +1,18 @@
 
 class Map {
-  constructor() {
+  constructor(ctx) {
     this.level = Map.LEVELS[1];
     this.layout = Map.LEVELS[1].tiles;
     this.startingPos = Map.LEVELS[1].startingPos;
+    this.flipMap = this.flipMap.bind(this);
+    this.ctx = ctx
     // this.flipMap();
     // this.render(ctx);
     // this.render(ctx);
   }
 
   draw(ctx, posX, posY, tile) {
+    // debugger
     let size;
     let color;
     if (tile === 1) {
@@ -28,29 +31,30 @@ class Map {
   };
 
   render(ctx) {
-    console.log('rendered')
+    // console.log('rendered')
     for (let i = 0; i < this.layout.length; i++) {
       let tile = this.layout[i];
       let posX = (i % 10) * 100;
       let posY = (Math.floor(i / 10) * 100);
-      console.log(posX, posY)
+      // console.log(posX, posY)
       if (tile !== 0) {
         this.draw(ctx, posX, posY, tile)
       }
     }
   }
 
-  flipMap(ctx) {
-    console.log("flipped")
+  flipMap(map, ctx) {
+    // console.log("flipped")
+    // debugger
     for (let i = 0; i < this.layout.length; i++) {
       let tile = this.layout[i];
-      if (tile === 2) {
+      if (this.layout[i] === 2) {
         this.level[i] = 3
-      } else if (tile === 3) {
+      } else if (this.layout[i] === 3) {
         this.level[i] = 2
       }
     }
-    this.render(ctx)
+    console.log(this.layout)
   }
 
 }
