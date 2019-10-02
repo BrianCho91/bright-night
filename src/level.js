@@ -1,35 +1,48 @@
-import Tile from './tile';
+// import Tile from './tile';
 
-export function buildLevel(level, game) {
-  // debugger
-  let blackTiles = [];
-  let whiteTiles = [];
+// export function buildLevel(level, game) {
+//   // debugger
+//   let blackTiles = [];
+//   let whiteTiles = [];
 
-  level.forEach((tile, idx) => {
-    if (tile !== 0) {
-      let pos = {
-        x: (idx % 10) * 100,
-        y: (Math.floor(idx / 10) * 100)
-      }
-      if (tile === 1) {
-        blackTiles.push(new Tile(pos, "black", game))
-      }
-    }
-  })
-  return blackTiles;
-}
+//   level.forEach((tile, idx) => {
+//     if (tile !== 0) {
+//       let pos = {
+//         x: (idx % 20) * 50,
+//         y: (Math.floor((idx / 20)) * 110)
+//       }
+//       let width = 50;
+//       let height = 50;
+//       if (tile === 1) {
+//         blackTiles.push(new Tile(pos, width, height, "black", game))
+//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
+//       }
+//       if (tile === 2) {
+//         blackTiles.push(new Tile(pos, width, height, "green", game))
+//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
+//       }
+//       if (tile === 3) {
+//         let height = 20
+//         blackTiles.push(new Tile(pos, width, height, "red", game))
+//       }
+//     }
+//   })
+//   // console.log(blackTiles)
+//   return blackTiles;
+// }
 
 export const levels = {
     "1": {
 
       "tiles":
         [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 1, 2, 2, 0, 0, 3, 3, 3, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+          0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 1, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+          2, 1, 1, 1, 1, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          // 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         ],
       "startingPos":
         [250, 250]

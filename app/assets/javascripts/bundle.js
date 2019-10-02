@@ -8604,13 +8604,98 @@ function extend() {
 /*!**************************!*\
   !*** ./src/collision.js ***!
   \**************************/
-/*! exports provided: detectCollisionTop */
+/*! exports provided: detectCollision */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "detectCollisionTop", function() { return detectCollisionTop; });
-function detectCollisionTop(tile, player) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "detectCollision", function() { return detectCollision; });
+// export function detectCollisionTop(tile, player) {
+//   // console.log('hi')
+//   // debugger
+//   let topOfPlayer = player.pos.y;
+//   let leftOfPlayer = player.pos.x
+//   let botOfPlayer = player.pos.y + player.height;
+//   let rightOfPlayer = player.pos.x + player.width;
+
+//   let topOfTile = tile.pos.y;
+//   let leftOfTile = tile.pos.x;
+//   let botOfTile = tile.pos.y + tile.height;
+//   let rightOfTile = tile.pos.x + tile.width;
+
+//   if (
+//     player.jumping === false &&
+//     botOfPlayer >= topOfTile &&
+//     topOfPlayer <= botOfTile &&
+//     leftOfPlayer >= leftOfTile &&
+//     rightOfPlayer <= rightOfTile
+//     ) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+
+// // export function detectCollisionBot(tile, player) {
+// //   // console.log('hi')
+// //   let topOfPlayer = player.pos.y;
+// //   let leftOfPlayer = player.pos.x
+// //   // let botOfPlayer = player.pos.y + player.height;
+// //   let rightOfPlayer = player.pos.x + player.width;
+
+// //   // let topOfTile = tile.pos.y;
+// //   let leftOfTile = tile.pos.x;
+// //   let botOfTile = tile.pos.y + tile.height;
+// //   let rightOfTile = tile.pos.x + tile.width;
+
+// //   if (
+// //     // botOfPlayer >= topOfTile &&
+// //     topOfPlayer <= botOfTile &&
+// //     // player.color !== "black"
+// //     // player.jumping === false
+// //     leftOfPlayer >= leftOfTile &&
+// //     rightOfPlayer <= rightOfTile
+// //   ) {
+// //     return true;
+// //   } else {
+// //     return false;
+// //   }
+// // }
+
+// export function detectCollisionLeft(tile, player) {
+//   // console.log('hi')
+//   let topOfPlayer = player.pos.y;
+//   let leftOfPlayer = player.pos.x
+//   let botOfPlayer = player.pos.y + player.height;
+//   let rightOfPlayer = player.pos.x + player.width;
+
+//   let topOfTile = tile.pos.y;
+//   let leftOfTile = tile.pos.x;
+//   let botOfTile = tile.pos.y + tile.height;
+//   let rightOfTile = tile.pos.x + tile.width;
+
+//   if (
+//     // botOfPlayer >= topOfTile &&
+//     // player.color !== "black"
+//     // player.jumping === false
+//     // topOfPlayer <= botOfTile
+//     leftOfPlayer >= leftOfTile
+//     // rightOfPlayer <= rightOfTile
+//     // leftOfPlayer = rightOfTile
+//   ) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+
+
+
+
+
+
+
+function detectCollision(tile, player) {
   // console.log('hi')
   let topOfPlayer = player.pos.y;
   let leftOfPlayer = player.pos.x
@@ -8623,99 +8708,46 @@ function detectCollisionTop(tile, player) {
   let rightOfTile = tile.pos.x + tile.width;
 
   if (
-    // player.jumping === false &&
-    botOfPlayer >= topOfTile
-    // topOfPlayer <= botOfTile &&
-    // leftOfPlayer >= leftOfTile &&
-    // rightOfPlayer <= rightOfTile
-    ) {
+    botOfPlayer >= topOfTile &&
+    topOfPlayer <= botOfTile &&
+    leftOfPlayer >= leftOfTile &&
+    rightOfPlayer <= rightOfTile
+  ) {
     return true;
   } else {
     return false;
   }
 }
 
-// export function detectCollisionBot(tile, player) {
-//   // console.log('hi')
+// export function detectCollision(player, tile) {
+//   let tilePosX = tile.pos.x;
+//   let tilePosY = tile.pos.y;
+//   let playerPosX = player.pos.x;
+//   let playerPosY = player.pos.y;
+
+
+// }
+
+
+// export function detectCollisionLeft(player, tile) {
 //   let topOfPlayer = player.pos.y;
-//   // let leftOfPlayer = player.pos.x
-//   // let botOfPlayer = player.pos.y + player.height;
-//   // let rightOfPlayer = player.pos.x + player.width;
-
-//   // let topOfTile = tile.pos.y;
-//   // let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   // let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     // botOfPlayer >= topOfTile &&
-//     topOfPlayer <= botOfTile &&
-//     player.color !== "black"
-//     // player.jumping === false
-//     // leftOfPlayer >= leftOfTile &&
-//     // rightOfPlayer <= rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// export function detectCollisionTop(tile, player) {
-//   // console.log('hi')
-//   // let topOfPlayer = player.pos.y;
-//   // let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   // let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   // let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   // let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     botOfPlayer >= topOfTile &&
-//     player.color !== "black"
-//     // player.jumping === false
-//     // topOfPlayer <= botOfTile
-//     // leftOfPlayer >= leftOfTile &&
-//     // rightOfPlayer <= rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-
-
-
-
-
-
-// export function detectCollisionX(tile, player) {
-//   // console.log('hi')
-//   // let topOfPlayer = player.pos.y;
 //   let leftOfPlayer = player.pos.x
-//   // let botOfPlayer = player.pos.y + player.height;
+//   let botOfPlayer = player.pos.y + player.height;
 //   let rightOfPlayer = player.pos.x + player.width;
 
-//   // let topOfTile = tile.pos.y;
+//   let topOfTile = tile.pos.y;
 //   let leftOfTile = tile.pos.x;
-//   // let botOfTile = tile.pos.y + tile.height;
+//   let botOfTile = tile.pos.y + tile.height;
 //   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     // botOfPlayer >= topOfTile &&
-//     // topOfPlayer <= botOfTile &&
-//     leftOfPlayer >= leftOfTile &&
-//     rightOfPlayer <= rightOfTile
-//   ) {
-//     return true;
+  
+//   if (leftOfPlayer === rightOfTile) {
+//     // return true
 //   } else {
-//     return false;
+//     return false
 //   }
 // }
+
+
 
 /***/ }),
 
@@ -8875,9 +8907,11 @@ class Game {
     // // debugger
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
+    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
     this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx);
     this.tiles = [];
+
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -8886,14 +8920,17 @@ class Game {
   draw(ctx) {
     // debugger
     ctx.clearRect(0, 0, 1000, 600)
-    this.tiles.forEach(tile => tile.draw(ctx))
+    // debugger
+    // this.tiles.forEach(tile => tile.draw(ctx))
+    this.map.tiles.forEach(tile => tile.draw(ctx))
     // this.map.render(ctx)
     this.player.draw(ctx)
   }
 
   start() {
     // debugger
-    this.tiles = Object(_level__WEBPACK_IMPORTED_MODULE_4__["buildLevel"])(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this)
+    // this.tiles = buildLevel(levels[1].tiles, this)
+    this.map.draw(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
     this.lastTime = 0;
     this.controller.keyboardHandlers();
     requestAnimationFrame(this.animate.bind(this))
@@ -8902,8 +8939,8 @@ class Game {
   animate(time) {
     const dt = time - this.lastTime;
     this.draw(this.ctx)
+    // this.tiles.forEach(tile => tile.update())
     this.player.update(dt)
-    this.tiles.forEach(tile => tile.update())
     // this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this))
@@ -9050,46 +9087,57 @@ window.addEventListener("DOMContentLoaded", () => {
 /*!**********************!*\
   !*** ./src/level.js ***!
   \**********************/
-/*! exports provided: buildLevel, levels */
+/*! exports provided: levels */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildLevel", function() { return buildLevel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "levels", function() { return levels; });
-/* harmony import */ var _tile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tile */ "./src/tile.js");
+// import Tile from './tile';
 
+// export function buildLevel(level, game) {
+//   // debugger
+//   let blackTiles = [];
+//   let whiteTiles = [];
 
-function buildLevel(level, game) {
-  // debugger
-  let blackTiles = [];
-  let whiteTiles = [];
-
-  level.forEach((tile, idx) => {
-    if (tile !== 0) {
-      let pos = {
-        x: (idx % 10) * 100,
-        y: (Math.floor(idx / 10) * 100)
-      }
-      if (tile === 1) {
-        blackTiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, "black", game))
-      }
-    }
-  })
-  return blackTiles;
-}
+//   level.forEach((tile, idx) => {
+//     if (tile !== 0) {
+//       let pos = {
+//         x: (idx % 20) * 50,
+//         y: (Math.floor((idx / 20)) * 110)
+//       }
+//       let width = 50;
+//       let height = 50;
+//       if (tile === 1) {
+//         blackTiles.push(new Tile(pos, width, height, "black", game))
+//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
+//       }
+//       if (tile === 2) {
+//         blackTiles.push(new Tile(pos, width, height, "green", game))
+//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
+//       }
+//       if (tile === 3) {
+//         let height = 20
+//         blackTiles.push(new Tile(pos, width, height, "red", game))
+//       }
+//     }
+//   })
+//   // console.log(blackTiles)
+//   return blackTiles;
+// }
 
 const levels = {
     "1": {
 
       "tiles":
         [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 1, 2, 2, 0, 0, 3, 3, 3, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+          0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 1, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
+          2, 1, 1, 1, 1, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          // 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         ],
       "startingPos":
         [250, 250]
@@ -9122,84 +9170,69 @@ const levels = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _tile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tile */ "./src/tile.js");
+
 
 class Map {
-  constructor(ctx) {
-    this.level = Map.LEVELS[1];
-    this.layout = Map.LEVELS[1].tiles;
-    this.startingPos = Map.LEVELS[1].startingPos;
-    this.flipMap = this.flipMap.bind(this);
-    this.ctx = ctx
-    let tiles = [];
-    // this.flipMap();
-    // this.render(ctx);
-    // this.render(ctx);
+  constructor(level, game) {
+    this.level = level,
+      this.game = game
+      this.tiles = [];
   }
 
-  // draw(ctx, posX, posY, tile) {
-  //   // debugger
-  //   let size;
-  //   let color;
-  //   if (tile === 1) {
-  //     size = [100, 100];
-  //     color = "black";
-  //   } else if (tile === 2) {
-  //     size = [100, 20];
-  //     color = "grey"
-  //   } else if (tile === 3) {
-  //     size = [100, 20];
-  //     color = "lightgrey"
-  //   }
-
-  //   ctx.fillStyle = color
-  //   ctx.fillRect(posX, posY, size[0], size[1]);
-  // };
-
-  render(ctx) {
-    // console.log('rendered')
-    for (let i = 0; i < this.layout.length; i++) {
-      let tile = this.layout[i];
-      let posX = (i % 10) * 100;
-      let posY = (Math.floor(i / 10) * 100);
-      // console.log(posX, posY)
+  draw() {
+    let blackTiles = [];
+    let whiteTiles = [];
+// debugger
+    this.level.forEach((tile, idx) => {
       if (tile !== 0) {
-        this.draw(ctx, posX, posY, tile)
+        let pos = {
+          x: (idx % 20) * 50,
+          y: (Math.floor((idx / 20)) * 110)
+        }
+        let width = 50;
+        let height = 50;
+        if (tile === 1) {
+          // blackTiles.push(new Tile(pos, width, height, "black", this.game))
+
+          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "black", this.game))
+        }
+        if (tile === 2) {
+          // blackTiles.push(new Tile(pos, width, height, "green", this.game))
+
+          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "green", this.game))
+        }
+        if (tile === 3) {
+          let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "red", this.game))
+        }
       }
-    }
+    })
+    // console.log(blackTiles)
+    // return blackTiles;
+    return this.tiles
   }
 
-  // flipMap(map, ctx) {
-  //   console.log("flipped")
-  //   // debugger
-  //   for (let i = 0; i < this.layout.length; i++) {
-  //     let tile = this.layout[i];
-  //     if (this.layout[i] === 2) {
-  //       this.layout[i] = 3
-  //     } else if (this.layout[i] === 3) {
-  //       this.layout[i] = 2
-  //     }
-  //   }
-  //   console.log(this.layout)
-  // }
 
 }
 
-Map.LEVELS = {
-  "1": {
+// Map.LEVELS = {
+//   "1": {
 
-    "tiles": 
-      [
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 2, 2, 2, 0, 0, 3, 3, 3, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-      ],
-    "startingPos": 
-      [ 250, 250]
-  }
-}
+//     "tiles":
+//       [
+//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//         0, 2, 2, 2, 0, 0, 3, 3, 3, 0,
+//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//         1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+//       ],
+//     "startingPos":
+//       [250, 250]
+//   }
+// }
 
 /* harmony default export */ __webpack_exports__["default"] = (Map);
 
@@ -9231,6 +9264,7 @@ class Player {
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
+
 
   }
 
@@ -9370,21 +9404,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Tile {
-  constructor(pos, color, game) {
-    this.width = 100,
-      this.height = 100,
+  constructor(pos, width, height, color, game) {
+    // debugger
+    this.width = width,
+      this.height = height,
       this.color = color,
-      this.pos = pos
+      this.pos = pos,
+      this.game = game
     // this.pos = {
     //   x: 250, // change to level start later
     //   y: 250
     // }
-    this.game = game
     // this.update();
   }
 
   draw(ctx) {
     // console.log('j')
+    // debugger
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
   }
@@ -9393,20 +9429,36 @@ class Tile {
     // debugger
     if
       (
-        Object(_collision__WEBPACK_IMPORTED_MODULE_0__["detectCollisionTop"])(this, this.game.player) &&
-        this.color === "black"
-        // this.game.player.jumping === false
-      ) {
-        console.log(this)
-        console.log(this.game.player)
-        this.game.player.velY = 0;
+      Object(_collision__WEBPACK_IMPORTED_MODULE_0__["detectCollision"])(this, this.game.player) &&
+      this.color === "black"
+      // this.game.player.jumping === false
+    ) {
+      console.log(this)
+      // console.log(this.game.player)
+      this.game.player.velY = 0
     }
-    // if (detectCollisionX(this, this.game.player)) {
-    //   console.log('x')
-    //   this.game.player.velX = 0;
+
+      // if 
+      //   (
+      //     detectCollisionLeft(this.game.player, this) &&
+      //     this.color === "black"
+      //   ) {
+      //   console.log(this)
+      //   // console.log(this.game.player)
+      //     this.game.player.velX = 0;
+      //   }
+      }
+    //   // if (detectCollisionX(this, this.game.player)) {
+    //   //   console.log('x')
+    //   //   this.game.player.velX = 0;
+    //   // }
+
+    // if (detectCollision(this, this.game.player) && this.color === "black") {
+    //   console.log(this.pos)
+    //   this.game.player.velY = 0
     // }
 
-  }
+  // }
 
 
 

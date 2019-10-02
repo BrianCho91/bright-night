@@ -1,4 +1,4 @@
-import { detectCollision } from './collision';
+import { detectCollisionLeft } from './collision';
 
 class Player {
   constructor() {
@@ -14,6 +14,7 @@ class Player {
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
+
 
   }
 
