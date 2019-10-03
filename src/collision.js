@@ -42,9 +42,9 @@ class Collision {
     // debugger
     if (value !== 0) {
       if (this.collidePlatTop(entity, tileY)) return;
-      else if (this.collidePlatBot(entity, tileY + 50)) return;
-      else if (this.collidePlatLeft(entity, tileX)) return;
-      else if (this.collidePlatRight(entity, tileX + 50)) return;
+      if (this.collidePlatBot(entity, tileY + 50)) return;
+      if (this.collidePlatLeft(entity, tileX)) return;
+      (this.collidePlatRight(entity, tileX + 50));
     }
   }
 
@@ -60,7 +60,7 @@ class Collision {
   }
 
   collidePlatRight(entity, tileRight) {
-    if (entity.getLeft() > tileRight && entity.getPastRight() <= tileRight) {
+    if (entity.getLeft() < tileRight && entity.getPastRight() >= tileRight) {
       entity.setLeft(tileRight + 0.01)
       // debugger
       // console.log(tileRight)

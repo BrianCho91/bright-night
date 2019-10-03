@@ -47,7 +47,7 @@ class Entity {
   }
 
   setRight(x) {
-    this.pos.x = (x + this.width)
+    this.pos.x = (x - this.width)
   }
 
   setBot(y) {

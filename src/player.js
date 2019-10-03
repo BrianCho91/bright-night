@@ -5,8 +5,8 @@ import Entity from './entity';
 class Player extends Entity {
   constructor(x, y) {
     super(x, y)
-    this.width = 50,
-      this.height = 50,
+    this.width = 20,
+      this.height = 20,
       this.color = "blue",
       // this.pos = {
       //   x: 20, // change to level start later

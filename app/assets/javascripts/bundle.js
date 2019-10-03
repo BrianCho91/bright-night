@@ -8653,9 +8653,9 @@ class Collision {
     // debugger
     if (value !== 0) {
       if (this.collidePlatTop(entity, tileY)) return;
-      else if (this.collidePlatBot(entity, tileY + 50)) return;
-      else if (this.collidePlatLeft(entity, tileX)) return;
-      else if (this.collidePlatRight(entity, tileX + 50)) return;
+      if (this.collidePlatBot(entity, tileY + 50)) return;
+      if (this.collidePlatLeft(entity, tileX)) return;
+      (this.collidePlatRight(entity, tileX + 50));
     }
   }
 
@@ -8671,7 +8671,7 @@ class Collision {
   }
 
   collidePlatRight(entity, tileRight) {
-    if (entity.getLeft() > tileRight && entity.getPastRight() <= tileRight) {
+    if (entity.getLeft() < tileRight && entity.getPastRight() >= tileRight) {
       entity.setLeft(tileRight + 0.01)
       // debugger
       // console.log(tileRight)
@@ -8894,7 +8894,7 @@ class Entity {
   }
 
   setRight(x) {
-    this.pos.x = (x + this.width)
+    this.pos.x = (x - this.width)
   }
 
   setBot(y) {
@@ -9313,8 +9313,8 @@ __webpack_require__.r(__webpack_exports__);
 class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(x, y) {
     super(x, y)
-    this.width = 50,
-      this.height = 50,
+    this.width = 20,
+      this.height = 20,
       this.color = "blue",
       // this.pos = {
       //   x: 20, // change to level start later
