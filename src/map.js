@@ -7,7 +7,7 @@ class Map {
       this.tiles = [];
   }
 
-  draw() {
+  create() {
     let blackTiles = [];
     let whiteTiles = [];
 // debugger
@@ -21,13 +21,13 @@ class Map {
         let height = 50;
         if (tile === 1) {
           // blackTiles.push(new Tile(pos, width, height, "black", this.game))
-
+          // debugger
           this.tiles.push(new Tile(pos, width, height, "black", this.game))
         }
         if (tile === 2) {
           // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
-          this.tiles.push(new Tile(pos, width, height, "green", this.game))
+          this.tiles.push(new Tile(pos, width, height, "grey", this.game))
         }
         if (tile === 3) {
           let height = 20
@@ -39,6 +39,12 @@ class Map {
     // console.log(blackTiles)
     // return blackTiles;
     return this.tiles
+  }
+
+  flipMap() {
+    this.tiles.forEach(tile => {
+      tile.color === "black" ? tile.color = "grey" : tile.color = "black"
+    })
   }
 
 

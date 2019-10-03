@@ -12,12 +12,12 @@ class Game {
     // // debugger
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
-    this.map = new Map(levels[1].tiles, this);
+    this.map = new Map(levels[1].tiles, this, this.color);
     this.player = new Player(20, 20);
-    this.controller = new Controller(this.player, this.map, this.ctx);
+    this.controller = new Controller(this.player, this.map, this.ctx, this);
     this.collision = new Collision(this.map)
     this.tiles = [];
-
+    this.color = "black"
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -37,7 +37,7 @@ class Game {
   start() {
     // debugger
     // this.tiles = buildLevel(levels[1].tiles, this)
-    this.map.draw(levels[1].tiles, this);
+    this.map.create(levels[1].tiles, this);
     this.lastTime = 0;
     this.controller.keyboardHandlers();
     requestAnimationFrame(this.animate.bind(this))

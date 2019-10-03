@@ -8768,7 +8768,8 @@ class Controller {
           break;
 
         case 32: // space
-          this.map.flipMap(this.map);
+        // debugger
+          this.map.flipMap();
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')
@@ -8943,12 +8944,12 @@ class Game {
     // // debugger
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
-    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
+    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this, this.color);
     this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](20, 20);
-    this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx);
+    this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx, this);
     this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map)
     this.tiles = [];
-
+    this.color = "black"
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -8968,7 +8969,7 @@ class Game {
   start() {
     // debugger
     // this.tiles = buildLevel(levels[1].tiles, this)
-    this.map.draw(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
+    this.map.create(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
     this.lastTime = 0;
     this.controller.keyboardHandlers();
     requestAnimationFrame(this.animate.bind(this))
@@ -9223,7 +9224,7 @@ class Map {
       this.tiles = [];
   }
 
-  draw() {
+  create() {
     let blackTiles = [];
     let whiteTiles = [];
 // debugger
@@ -9237,13 +9238,13 @@ class Map {
         let height = 50;
         if (tile === 1) {
           // blackTiles.push(new Tile(pos, width, height, "black", this.game))
-
+          // debugger
           this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "black", this.game))
         }
         if (tile === 2) {
           // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
-          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "green", this.game))
+          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "grey", this.game))
         }
         if (tile === 3) {
           let height = 20
@@ -9255,6 +9256,12 @@ class Map {
     // console.log(blackTiles)
     // return blackTiles;
     return this.tiles
+  }
+
+  flipMap() {
+    this.tiles.forEach(tile => {
+      tile.color === "black" ? tile.color = "grey" : tile.color = "black"
+    })
   }
 
 
@@ -9512,16 +9519,16 @@ class Tile {
 
   update() {
     // debugger
-    if
-      (
-      Object(_collision__WEBPACK_IMPORTED_MODULE_0__["detectCollision"])(this, this.game.player) &&
-      this.color === "black"
-      // this.game.player.jumping === false
-    ) {
-      console.log(this)
-      // console.log(this.game.player)
-      this.game.player.velY = 0
-    }
+    // if
+    //   (
+    //   detectCollision(this, this.game.player) &&
+    //   this.color === "black"
+    //   // this.game.player.jumping === false
+    // ) {
+    //   console.log(this)
+    //   // console.log(this.game.player)
+    //   this.game.player.velY = 0
+    // }
 
     // if 
     //   (

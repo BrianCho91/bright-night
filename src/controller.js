@@ -47,7 +47,8 @@ class Controller {
           break;
 
         case 32: // space
-          this.map.flipMap(this.map);
+        // debugger
+          this.map.flipMap();
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')

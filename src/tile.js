@@ -32,16 +32,16 @@ class Tile {
 
   update() {
     // debugger
-    if
-      (
-      detectCollision(this, this.game.player) &&
-      this.color === "black"
-      // this.game.player.jumping === false
-    ) {
-      console.log(this)
-      // console.log(this.game.player)
-      this.game.player.velY = 0
-    }
+    // if
+    //   (
+    //   detectCollision(this, this.game.player) &&
+    //   this.color === "black"
+    //   // this.game.player.jumping === false
+    // ) {
+    //   console.log(this)
+    //   // console.log(this.game.player)
+    //   this.game.player.velY = 0
+    // }
 
     // if 
     //   (
