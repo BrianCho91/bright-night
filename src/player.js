@@ -1,30 +1,35 @@
 import { detectCollisionLeft } from './collision';
 import Map from './map';
+import Entity from './entity';
 
-class Player {
-  constructor(map) {
+class Player extends Entity {
+  constructor(x, y) {
+    super(x, y)
     this.width = 50,
       this.height = 50,
       this.color = "blue",
-      this.pos = {
-        x: 250, // change to level start later
-        y: 250
-      }
+      // this.pos = {
+      //   x: 20, // change to level start later
+      //   y: 20
+      // }
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
-    this.topLeft = {
-      x: this.pos.x,
-      y: this.pos.y - this.height
-    }
-    this.botRight = {
-      x: this.pos.x + this.width,
-      y: this.pos.y
-    }
-    this.map = map;
+    // this.topLeft = {
+    //   x: this.pos.x,
+    //   y: this.pos.y - this.height
+    // }
+    // this.botRight = {
+    //   x: this.pos.x + this.width,
+    //   y: this.pos.y
+    // }
 
+    // this.top = this.pos.y
+    // this.left = this.pos.x
+    // this.bot = this.pos.y + this.height;
+    // this.right = this.pos.x + this.width
   }
 
   draw(ctx) {
@@ -34,11 +39,11 @@ class Player {
   }
 
   moveLeft() {
-    debugger
-    if (this.map.collidingWithMap(this.topLeft)) {
-      console.log('hi')  
-      return
-    }
+    // debugger
+    // if (this.map.collidingWithMap(this.topLeft)) {
+    //   console.log('hi')  
+    //   return
+    // }
     this.velX = -this.maxVelX
   }
 

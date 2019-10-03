@@ -8604,146 +8604,105 @@ function extend() {
 /*!**************************!*\
   !*** ./src/collision.js ***!
   \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// export function detectCollisionTop(tile, player) {
-//   // console.log('hi')
-//   // debugger
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Collision {
+  constructor(map) {
+    // this.player = player
+    // debugger
+    this.map = map.level
+    // console.log(map)
+  }
 
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     player.jumping === false &&
-//     botOfPlayer >= topOfTile &&
-//     topOfPlayer <= botOfTile &&
-//     leftOfPlayer >= leftOfTile &&
-//     rightOfPlayer <= rightOfTile
-//     ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// // export function detectCollisionBot(tile, player) {
-// //   // console.log('hi')
-// //   let topOfPlayer = player.pos.y;
-// //   let leftOfPlayer = player.pos.x
-// //   // let botOfPlayer = player.pos.y + player.height;
-// //   let rightOfPlayer = player.pos.x + player.width;
-
-// //   // let topOfTile = tile.pos.y;
-// //   let leftOfTile = tile.pos.x;
-// //   let botOfTile = tile.pos.y + tile.height;
-// //   let rightOfTile = tile.pos.x + tile.width;
-
-// //   if (
-// //     // botOfPlayer >= topOfTile &&
-// //     topOfPlayer <= botOfTile &&
-// //     // player.color !== "black"
-// //     // player.jumping === false
-// //     leftOfPlayer >= leftOfTile &&
-// //     rightOfPlayer <= rightOfTile
-// //   ) {
-// //     return true;
-// //   } else {
-// //     return false;
-// //   }
-// // }
-
-// export function detectCollisionLeft(tile, player) {
-//   // console.log('hi')
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     // botOfPlayer >= topOfTile &&
-//     // player.color !== "black"
-//     // player.jumping === false
-//     // topOfPlayer <= botOfTile
-//     leftOfPlayer >= leftOfTile
-//     // rightOfPlayer <= rightOfTile
-//     // leftOfPlayer = rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
+  isColliding(entity) {
+    // debugger
+    if (entity.getBot() > 600) entity.setBot(600);
+    if (entity.getLeft() < 0) entity.setLeft(0);
+    if (entity.getRight() > 1000) entity.setRight(1000);
 
 
+    let top, bot, right, left, value;
+// debugger
+    top = Math.floor(entity.getTop() / 50)
+    left = Math.floor(entity.getLeft() / 50)
+    value = this.map[top * 20 + left]
+    // console.log('one' + value)
+    this.collide(value, entity, left * 50, top * 50)
+
+    top = Math.floor(entity.getTop() / 50)
+    right = Math.floor(entity.getRight() / 50)
+    value = this.map[top * 20 + right]
+    this.collide(value, entity, right * 50, top * 50)
+
+    bot = Math.floor(entity.getBot() / 50)
+    left = Math.floor(entity.getLeft() / 50)
+    value = this.map[bot * 20 + left]
+    this.collide(value, entity, left * 50, bot * 50)
+
+    bot = Math.floor(entity.getBot() / 50)
+    right = Math.floor(entity.getRight() / 50)
+    value = this.map[bot * 20 + right]
+    this.collide(value, entity, right * 50, bot * 50)
+    
+  }
+
+  collide(value, entity, tileX, tileY) {
+    // debugger
+    if (value !== 0) {
+      if (this.collidePlatTop(entity, tileY)) return;
+      else if (this.collidePlatBot(entity, tileY + 50)) return;
+      else if (this.collidePlatLeft(entity, tileX)) return;
+      else if (this.collidePlatRight(entity, tileX + 50)) return;
+    }
+  }
+
+  collidePlatTop(entity, tileTop) {
+    if (entity.getBot() > tileTop && entity.getPastBot() <= tileTop) {
+      entity.setBot(tileTop - 0.01);
+      entity.velY = 0;
+      // debugger
+      // console.log(tileTop)
+      return true
+    }
+    return false;
+  }
+
+  collidePlatRight(entity, tileRight) {
+    if (entity.getLeft() > tileRight && entity.getPastRight() <= tileRight) {
+      entity.setLeft(tileRight + 0.01)
+      // debugger
+      // console.log(tileRight)
+      return true
+    }
+    return false
+  }
+
+  collidePlatBot(entity, tileBot) {
+    if (entity.getTop() < tileBot && entity.getPastTop() >= tileBot) {
+      entity.setTop(tileBot + 0.01);
+      // console.log(tileBot)
+      entity.velY = 3;
+      return true;
+    }
+    return false;
+  }
+
+  collidePlatLeft(entity, tileLeft) {
+    if (entity.getRight() > tileLeft && entity.getRight() <= tileLeft) {
+      entity.setRight(tileLeft - 0.01)
+      // console.log(tileRight)
+      return true
+    }
+    return false;
+  }
 
 
+}
 
-
-
-// export function detectCollision(tile, player) {
-//   // console.log('hi')
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     botOfPlayer >= topOfTile &&
-//     topOfPlayer <= botOfTile &&
-//     leftOfPlayer >= leftOfTile &&
-//     rightOfPlayer <= rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// export function detectCollision(player, tile) {
-//   let tilePosX = tile.pos.x;
-//   let tilePosY = tile.pos.y;
-//   let playerPosX = player.pos.x;
-//   let playerPosY = player.pos.y;
-
-
-// }
-
-
-// export function detectCollisionLeft(player, tile) {
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-  
-//   if (leftOfPlayer === rightOfTile) {
-//     // return true
-//   } else {
-//     return false
-//   }
-// }
-
+/* harmony default export */ __webpack_exports__["default"] = (Collision);
 
 
 /***/ }),
@@ -8877,6 +8836,84 @@ class Controller {
 
 /***/ }),
 
+/***/ "./src/entity.js":
+/*!***********************!*\
+  !*** ./src/entity.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Entity {
+  constructor(x, y) {
+    this.pos = {
+      x: x,
+      y: y
+    }    
+    this.pastPos = {
+      x: x,
+      y: y
+    }
+  }
+
+  getTop() {
+    return this.pos.y
+  }
+
+  getRight() {
+    return (this.pos.x + this.width);
+  }
+
+  getBot() {
+    return (this.pos.y + this.height);
+  }
+
+  getLeft() {
+    return this.pos.x
+  }
+  
+  getPastTop() {
+    return this.pastPos.y
+  }
+
+  getPastRight() {
+    return (this.pastPos.x + 50);
+  }
+
+  getPastBot() {
+    return (this.pastPos.y + 50);
+  }
+
+  getPastLeft() {
+    return this.pastPos.x
+  }
+
+  setTop(y) {
+    this.pos.y = y
+  }
+
+  setRight(x) {
+    this.pos.x = (x + this.width)
+  }
+
+  setBot(y) {
+    this.pos.y = (y - this.height)
+  }
+
+  setLeft(x) {
+    this.pos.x = x;
+  }
+
+
+
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Entity);
+
+/***/ }),
+
 /***/ "./src/game.js":
 /*!*********************!*\
   !*** ./src/game.js ***!
@@ -8891,6 +8928,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
 /* harmony import */ var _tile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./tile */ "./src/tile.js");
 /* harmony import */ var _level__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./level */ "./src/level.js");
+/* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./collision */ "./src/collision.js");
+
 
 
 
@@ -8905,8 +8944,9 @@ class Game {
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
     this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
-    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](this.map);
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](20, 20);
     this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx);
+    this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map)
     this.tiles = [];
 
     // // this.controller = new Controller(this.player, this.map, ctx)
@@ -8919,9 +8959,10 @@ class Game {
     ctx.clearRect(0, 0, 1000, 600)
     // debugger
     // this.tiles.forEach(tile => tile.draw(ctx))
-    this.map.tiles.forEach(tile => tile.draw(ctx))
-    // this.map.render(ctx)
     this.player.draw(ctx)
+    this.map.tiles.forEach(tile => tile.draw(ctx))
+
+    // this.map.render(ctx)
   }
 
   start() {
@@ -8938,6 +8979,7 @@ class Game {
     this.draw(this.ctx)
     // this.tiles.forEach(tile => tile.update())
     this.player.update(dt)
+    this.collision.isColliding(this.player)
     // this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this))
@@ -9128,13 +9170,17 @@ const levels = {
 
       "tiles":
         [
-          0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 1, 2, 2, 0, 0, 3, 3, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
-          2, 1, 1, 1, 1, 1, 1, 2, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-          // 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          2, 1, 1, 1, 1, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
         ],
       "startingPos":
         [250, 250]
@@ -9185,7 +9231,7 @@ class Map {
       if (tile !== 0) {
         let pos = {
           x: (idx % 20) * 50,
-          y: (Math.floor((idx / 20)) * 110)
+          y: (Math.floor((idx / 20)) * 50)
         }
         let width = 50;
         let height = 50;
@@ -9212,19 +9258,19 @@ class Map {
   }
 
 
-  collidingWithMap(player) {
-    // debugger
-    return this.tiles.some(tile => {
-      return !(
-        (
-          player.x < tile.topLeft.x ||
-          player.x > tile.botRight.x ||
-          player.y < tile.topLeft.y ||
-          player.y > tile.botRight.y
-          )
-      )
-    })
-  }
+  // collidingWithMap(player) {
+  //   // debugger
+  //   return this.tiles.some(tile => {
+  //     return !(
+  //       (
+  //         player.x < tile.topLeft.x ||
+  //         player.x > tile.botRight.x ||
+  //         player.y < tile.topLeft.y ||
+  //         player.y > tile.botRight.y
+  //         )
+  //     )
+  //   })
+  // }
 }
 
 // Map.LEVELS = {
@@ -9258,35 +9304,40 @@ class Map {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collision */ "./src/collision.js");
-/* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_collision__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map */ "./src/map.js");
+/* harmony import */ var _entity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entity */ "./src/entity.js");
 
 
 
-class Player {
-  constructor(map) {
+
+class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
+  constructor(x, y) {
+    super(x, y)
     this.width = 50,
       this.height = 50,
       this.color = "blue",
-      this.pos = {
-        x: 250, // change to level start later
-        y: 250
-      }
+      // this.pos = {
+      //   x: 20, // change to level start later
+      //   y: 20
+      // }
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 5;
     this.maxVelY = 5;
     this.jumping = false
-    this.topLeft = {
-      x: this.pos.x,
-      y: this.pos.y - this.height
-    }
-    this.botRight = {
-      x: this.pos.x + this.width,
-      y: this.pos.y
-    }
-    this.map = map;
+    // this.topLeft = {
+    //   x: this.pos.x,
+    //   y: this.pos.y - this.height
+    // }
+    // this.botRight = {
+    //   x: this.pos.x + this.width,
+    //   y: this.pos.y
+    // }
 
+    // this.top = this.pos.y
+    // this.left = this.pos.x
+    // this.bot = this.pos.y + this.height;
+    // this.right = this.pos.x + this.width
   }
 
   draw(ctx) {
@@ -9296,11 +9347,11 @@ class Player {
   }
 
   moveLeft() {
-    debugger
-    if (this.map.collidingWithMap(this.topLeft)) {
-      console.log('hi')  
-      return
-    }
+    // debugger
+    // if (this.map.collidingWithMap(this.topLeft)) {
+    //   console.log('hi')  
+    //   return
+    // }
     this.velX = -this.maxVelX
   }
 
@@ -9427,7 +9478,6 @@ class Player {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./collision */ "./src/collision.js");
-/* harmony import */ var _collision__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_collision__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class Tile {

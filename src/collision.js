@@ -1,137 +1,94 @@
-// export function detectCollisionTop(tile, player) {
-//   // console.log('hi')
-//   // debugger
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
+class Collision {
+  constructor(map) {
+    // this.player = player
+    // debugger
+    this.map = map.level
+    // console.log(map)
+  }
 
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     player.jumping === false &&
-//     botOfPlayer >= topOfTile &&
-//     topOfPlayer <= botOfTile &&
-//     leftOfPlayer >= leftOfTile &&
-//     rightOfPlayer <= rightOfTile
-//     ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// // export function detectCollisionBot(tile, player) {
-// //   // console.log('hi')
-// //   let topOfPlayer = player.pos.y;
-// //   let leftOfPlayer = player.pos.x
-// //   // let botOfPlayer = player.pos.y + player.height;
-// //   let rightOfPlayer = player.pos.x + player.width;
-
-// //   // let topOfTile = tile.pos.y;
-// //   let leftOfTile = tile.pos.x;
-// //   let botOfTile = tile.pos.y + tile.height;
-// //   let rightOfTile = tile.pos.x + tile.width;
-
-// //   if (
-// //     // botOfPlayer >= topOfTile &&
-// //     topOfPlayer <= botOfTile &&
-// //     // player.color !== "black"
-// //     // player.jumping === false
-// //     leftOfPlayer >= leftOfTile &&
-// //     rightOfPlayer <= rightOfTile
-// //   ) {
-// //     return true;
-// //   } else {
-// //     return false;
-// //   }
-// // }
-
-// export function detectCollisionLeft(tile, player) {
-//   // console.log('hi')
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     // botOfPlayer >= topOfTile &&
-//     // player.color !== "black"
-//     // player.jumping === false
-//     // topOfPlayer <= botOfTile
-//     leftOfPlayer >= leftOfTile
-//     // rightOfPlayer <= rightOfTile
-//     // leftOfPlayer = rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
+  isColliding(entity) {
+    // debugger
+    if (entity.getBot() > 600) entity.setBot(600);
+    if (entity.getLeft() < 0) entity.setLeft(0);
+    if (entity.getRight() > 1000) entity.setRight(1000);
 
 
+    let top, bot, right, left, value;
+// debugger
+    top = Math.floor(entity.getTop() / 50)
+    left = Math.floor(entity.getLeft() / 50)
+    value = this.map[top * 20 + left]
+    // console.log('one' + value)
+    this.collide(value, entity, left * 50, top * 50)
+
+    top = Math.floor(entity.getTop() / 50)
+    right = Math.floor(entity.getRight() / 50)
+    value = this.map[top * 20 + right]
+    this.collide(value, entity, right * 50, top * 50)
+
+    bot = Math.floor(entity.getBot() / 50)
+    left = Math.floor(entity.getLeft() / 50)
+    value = this.map[bot * 20 + left]
+    this.collide(value, entity, left * 50, bot * 50)
+
+    bot = Math.floor(entity.getBot() / 50)
+    right = Math.floor(entity.getRight() / 50)
+    value = this.map[bot * 20 + right]
+    this.collide(value, entity, right * 50, bot * 50)
+    
+  }
+
+  collide(value, entity, tileX, tileY) {
+    // debugger
+    if (value !== 0) {
+      if (this.collidePlatTop(entity, tileY)) return;
+      else if (this.collidePlatBot(entity, tileY + 50)) return;
+      else if (this.collidePlatLeft(entity, tileX)) return;
+      else if (this.collidePlatRight(entity, tileX + 50)) return;
+    }
+  }
+
+  collidePlatTop(entity, tileTop) {
+    if (entity.getBot() > tileTop && entity.getPastBot() <= tileTop) {
+      entity.setBot(tileTop - 0.01);
+      entity.velY = 0;
+      // debugger
+      // console.log(tileTop)
+      return true
+    }
+    return false;
+  }
+
+  collidePlatRight(entity, tileRight) {
+    if (entity.getLeft() > tileRight && entity.getPastRight() <= tileRight) {
+      entity.setLeft(tileRight + 0.01)
+      // debugger
+      // console.log(tileRight)
+      return true
+    }
+    return false
+  }
+
+  collidePlatBot(entity, tileBot) {
+    if (entity.getTop() < tileBot && entity.getPastTop() >= tileBot) {
+      entity.setTop(tileBot + 0.01);
+      // console.log(tileBot)
+      entity.velY = 3;
+      return true;
+    }
+    return false;
+  }
+
+  collidePlatLeft(entity, tileLeft) {
+    if (entity.getRight() > tileLeft && entity.getRight() <= tileLeft) {
+      entity.setRight(tileLeft - 0.01)
+      // console.log(tileRight)
+      return true
+    }
+    return false;
+  }
 
 
+}
 
-
-
-// export function detectCollision(tile, player) {
-//   // console.log('hi')
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-
-//   if (
-//     botOfPlayer >= topOfTile &&
-//     topOfPlayer <= botOfTile &&
-//     leftOfPlayer >= leftOfTile &&
-//     rightOfPlayer <= rightOfTile
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
-
-// export function detectCollision(player, tile) {
-//   let tilePosX = tile.pos.x;
-//   let tilePosY = tile.pos.y;
-//   let playerPosX = player.pos.x;
-//   let playerPosY = player.pos.y;
-
-
-// }
-
-
-// export function detectCollisionLeft(player, tile) {
-//   let topOfPlayer = player.pos.y;
-//   let leftOfPlayer = player.pos.x
-//   let botOfPlayer = player.pos.y + player.height;
-//   let rightOfPlayer = player.pos.x + player.width;
-
-//   let topOfTile = tile.pos.y;
-//   let leftOfTile = tile.pos.x;
-//   let botOfTile = tile.pos.y + tile.height;
-//   let rightOfTile = tile.pos.x + tile.width;
-  
-//   if (leftOfPlayer === rightOfTile) {
-//     // return true
-//   } else {
-//     return false
-//   }
-// }
-
+export default Collision

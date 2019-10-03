@@ -3,6 +3,7 @@ import Map from './map';
 import Controller from './controller';
 import Tile from './tile'
 import { buildLevel, levels } from './level'
+import Collision from './collision';
 
 class Game {
   constructor(ctx) {
@@ -12,8 +13,9 @@ class Game {
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
     this.map = new Map(levels[1].tiles, this);
-    this.player = new Player(this.map);
+    this.player = new Player(20, 20);
     this.controller = new Controller(this.player, this.map, this.ctx);
+    this.collision = new Collision(this.map)
     this.tiles = [];
 
     // // this.controller = new Controller(this.player, this.map, ctx)
@@ -26,9 +28,10 @@ class Game {
     ctx.clearRect(0, 0, 1000, 600)
     // debugger
     // this.tiles.forEach(tile => tile.draw(ctx))
-    this.map.tiles.forEach(tile => tile.draw(ctx))
-    // this.map.render(ctx)
     this.player.draw(ctx)
+    this.map.tiles.forEach(tile => tile.draw(ctx))
+
+    // this.map.render(ctx)
   }
 
   start() {
@@ -45,6 +48,7 @@ class Game {
     this.draw(this.ctx)
     // this.tiles.forEach(tile => tile.update())
     this.player.update(dt)
+    this.collision.isColliding(this.player)
     // this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this))
