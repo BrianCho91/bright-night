@@ -8651,7 +8651,7 @@ class Collision {
 
   collide(value, entity, tileX, tileY) {
     // debugger
-    if (value !== 0) {
+    if (value === 1) {
       if (this.collidePlatTop(entity, tileY)) return;
       if (this.collidePlatBot(entity, tileY + 50)) return;
       if (this.collidePlatLeft(entity, tileX)) return;
@@ -9259,6 +9259,22 @@ class Map {
   }
 
   flipMap() {
+    // debugger
+    for (let i = 0; i < this.level.length; i++) {
+      if (this.level[i] === 1) {
+        this.level[i] = 2
+      } else if (this.level[i] === 2) {
+        this.level[i] = 1
+      }
+    }
+    // this.level.forEach(tile => {
+    //   // debugger
+    //   tile === 1 ? tile = 2 : tile = 1
+    //   tile === 2 ? tile = 1 : tile = 2
+    // })
+    // this.tiles = [];
+    // this.create();
+
     this.tiles.forEach(tile => {
       tile.color === "black" ? tile.color = "grey" : tile.color = "black"
     })
@@ -9329,8 +9345,9 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
       // }
     this.velX = 0;
     this.maxVelX = 3;
-    this.velY = 5;
+    this.velY = 0;
     this.maxVelY = 5;
+    this.gravity = 2;
     this.jumping = false
     // this.topLeft = {
     //   x: this.pos.x,
@@ -9389,8 +9406,7 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
     this.pos.x += this.velX
     this.pos.x += this.velX
-    this.pos.y += this.velY
-
+    this.pos.y += this.velY + this.gravity
     // if (this.pos.y + this.height > 600) {
     //   this.pos.y = 600 - this.height
     // }

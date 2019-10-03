@@ -42,6 +42,22 @@ class Map {
   }
 
   flipMap() {
+    // debugger
+    for (let i = 0; i < this.level.length; i++) {
+      if (this.level[i] === 1) {
+        this.level[i] = 2
+      } else if (this.level[i] === 2) {
+        this.level[i] = 1
+      }
+    }
+    // this.level.forEach(tile => {
+    //   // debugger
+    //   tile === 1 ? tile = 2 : tile = 1
+    //   tile === 2 ? tile = 1 : tile = 2
+    // })
+    // this.tiles = [];
+    // this.create();
+
     this.tiles.forEach(tile => {
       tile.color === "black" ? tile.color = "grey" : tile.color = "black"
     })

@@ -14,8 +14,9 @@ class Player extends Entity {
       // }
     this.velX = 0;
     this.maxVelX = 3;
-    this.velY = 5;
+    this.velY = 0;
     this.maxVelY = 5;
+    this.gravity = 2;
     this.jumping = false
     // this.topLeft = {
     //   x: this.pos.x,
@@ -74,8 +75,7 @@ class Player extends Entity {
 
     this.pos.x += this.velX
     this.pos.x += this.velX
-    this.pos.y += this.velY
-
+    this.pos.y += this.velY + this.gravity
     // if (this.pos.y + this.height > 600) {
     //   this.pos.y = 600 - this.height
     // }

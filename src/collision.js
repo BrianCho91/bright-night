@@ -40,7 +40,7 @@ class Collision {
 
   collide(value, entity, tileX, tileY) {
     // debugger
-    if (value !== 0) {
+    if (value === 1) {
       if (this.collidePlatTop(entity, tileY)) return;
       if (this.collidePlatBot(entity, tileY + 50)) return;
       if (this.collidePlatLeft(entity, tileX)) return;
