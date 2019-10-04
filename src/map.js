@@ -125,42 +125,7 @@ class Map {
       this.mode = "white"
       this.game.mode = "white"
     }
-
   }
-
-
-
-
-  // collidingWithMap(player) {
-  //   // debugger
-  //   return this.tiles.some(tile => {
-  //     return !(
-  //       (
-  //         player.x < tile.topLeft.x ||
-  //         player.x > tile.botRight.x ||
-  //         player.y < tile.topLeft.y ||
-  //         player.y > tile.botRight.y
-  //         )
-  //     )
-  //   })
-  // }
 }
-
-// Map.LEVELS = {
-//   "1": {
-
-//     "tiles":
-//       [
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 2, 2, 2, 0, 0, 3, 3, 3, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-//       ],
-//     "startingPos":
-//       [250, 250]
-//   }
-// }
 
 export default Map

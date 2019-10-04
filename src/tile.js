@@ -59,47 +59,6 @@ class Tile {
   //   ctx.fillStyle = 'skyblue';
   //   ctx.fill();
   // }
-
-  update() {
-    // debugger
-    // if
-    //   (
-    //   detectCollision(this, this.game.player) &&
-    //   this.color === "black"
-    //   // this.game.player.jumping === false
-    // ) {
-    //   console.log(this)
-    //   // console.log(this.game.player)
-    //   this.game.player.velY = 0
-    // }
-
-    // if 
-    //   (
-    //     detectCollisionLeft(this.game.player, this) &&
-    //     this.color === "black"
-    //   ) {
-    //   console.log(this)
-    //   // console.log(this.game.player)
-    //     this.game.player.velX = 0;
-    //   }
-  }
-  //   // if (detectCollisionX(this, this.game.player)) {
-  //   //   console.log('x')
-  //   //   this.game.player.velX = 0;
-  //   // }
-
-  // if (detectCollision(this, this.game.player) && this.color === "black") {
-  //   console.log(this.pos)
-  //   this.game.player.velY = 0
-  // }
-
-  // }
-
-
-
-
-
-
 }
 
 export default Tile;

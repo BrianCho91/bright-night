@@ -9216,19 +9216,6 @@ class Game {
     } 
   }
 
-
-  // draw(ctx) {
-  //   console.log('cear')
-  //   ctx.clearRect(0, 0, 1000, 600)
-  // }
-
-  // render(ctx) {
-  //   // debugger
-  //   ctx.clearRect(0, 0, 1000, 600)
-
-  //   this.map.render(ctx)
-  //   this.player.draw(ctx)
-  // }
 }
 
 const CONSTANTS = {
@@ -9259,43 +9246,8 @@ __webpack_require__.r(__webpack_exports__);
 class GameView {
   constructor(ctx) {
     this.game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx)
-    // this.controller = new Controller(this.game.player, this.game.map, ctx)
-    // this.keyboardHandlers(ctx);
+
   }
-
-  // animate(time) {
-  //   const timeDelta
-  // }
-
-  // render(ctx) {
-  //   // debugger
-  //   ctx.clearRect(0, 0, 1000, 600)
-
-  //   this.map.render(ctx)
-  //   this.player.draw(ctx)
-  // }
-
-
-
-  // keyboardHandlers(ctx) {
-  //   console.log('clear')
-  //   ctx.clearRect(0, 0, 1000, 600);
-  //   this.controller.keyboardHandlers()
-  //   this.game.render(ctx)
-  // }
-
-  // animate() {
-  //   ctx.clearRect(0, 0, 1000, 600);
-  //   requestAnimationFrame(this.animate.bind(this))
-  // }
-
-  // start(ctx) {
-  //   let that = this;
-  //   // this.keyboardHandlers(ctx);
-  //   // this.animate();
-
-
-  // }
 
 }
 
@@ -9333,22 +9285,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // let game = new Game(ctx);
   let game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
   game.start()
-  // gameView.start(ctx);
 
-  // test // 
-  // let player = new Player({ pos: [250,250] })
-  // // let player1 = new Player({ pos: [150, 250] }) 
-  // // player.move("left")
-  // // player.jump()
-  // player.draw(ctx);
-  // let game = new Game()
-  // // game.animate(ctx)
-  // let controller = new Controller(player, ctx)
-  // controller.keyboardHandlers(ctx)
-  // console.log(player.pos)
-  // // test //
-  // let map = new Map(ctx)
-  // console.log(map)
 });
 
 
@@ -9364,39 +9301,6 @@ window.addEventListener("DOMContentLoaded", () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "levels", function() { return levels; });
-// import Tile from './tile';
-
-// export function buildLevel(level, game) {
-//   // debugger
-//   let blackTiles = [];
-//   let whiteTiles = [];
-
-//   level.forEach((tile, idx) => {
-//     if (tile !== 0) {
-//       let pos = {
-//         x: (idx % 20) * 50,
-//         y: (Math.floor((idx / 20)) * 110)
-//       }
-//       let width = 50;
-//       let height = 50;
-//       if (tile === 1) {
-//         blackTiles.push(new Tile(pos, width, height, "black", game))
-//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
-//       }
-//       if (tile === 2) {
-//         blackTiles.push(new Tile(pos, width, height, "green", game))
-//         // blackTiles.push(new Tile(pos.x += 50, "black", game))
-//       }
-//       if (tile === 3) {
-//         let height = 20
-//         blackTiles.push(new Tile(pos, width, height, "red", game))
-//       }
-//     }
-//   })
-//   // console.log(blackTiles)
-//   return blackTiles;
-// }
-
 const levels = {
   "1": {
 
@@ -9574,20 +9478,6 @@ const levels = {
   },
 }
 
-// export default levels;
-
-// console.log(levels)
-
-
-// for (let i = 0; i < this.layout.length; i++) {
-//   let tile = this.layout[i];
-//   let posX = (i % 10) * 100;
-//   let posY = (Math.floor(i / 10) * 100);
-//   // console.log(posX, posY)
-//   if (tile !== 0) {
-//     this.draw(ctx, posX, posY, tile)
-//   }
-// }
 
 /***/ }),
 
@@ -9730,43 +9620,8 @@ class Map {
       this.mode = "white"
       this.game.mode = "white"
     }
-
   }
-
-
-
-
-  // collidingWithMap(player) {
-  //   // debugger
-  //   return this.tiles.some(tile => {
-  //     return !(
-  //       (
-  //         player.x < tile.topLeft.x ||
-  //         player.x > tile.botRight.x ||
-  //         player.y < tile.topLeft.y ||
-  //         player.y > tile.botRight.y
-  //         )
-  //     )
-  //   })
-  // }
 }
-
-// Map.LEVELS = {
-//   "1": {
-
-//     "tiles":
-//       [
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         0, 2, 2, 2, 0, 0, 3, 3, 3, 0,
-//         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//         1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-//       ],
-//     "startingPos":
-//       [250, 250]
-//   }
-// }
 
 /* harmony default export */ __webpack_exports__["default"] = (Map);
 
@@ -9794,10 +9649,7 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.width = 24,
       this.height = 24,
       this.color = "blue",
-      // this.pos = {
-      //   x: 20, // change to level start later
-      //   y: 20
-      // }
+
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
@@ -9806,27 +9658,8 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.jumping = false
     this.map = map
     this.right = true
-    // debugger
-    // this.topLeft = {
-    //   x: this.pos.x,
-    //   y: this.pos.y - this.height
-    // }
-    // this.botRight = {
-    //   x: this.pos.x + this.width,
-    //   y: this.pos.y
-    // }
-
-    // this.top = this.pos.y
-    // this.left = this.pos.x
-    // this.bot = this.pos.y + this.height;
-    // this.right = this.pos.x + this.width
   }
 
-  // draw(ctx) {
-  //   // console.log('j')
-  //   ctx.fillStyle = this.color;
-  //   ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
-  // }
     draw(ctx) {
     // console.log('j')
     if (this.map.mode === "white") {
@@ -9944,11 +9777,6 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     // }
 
   }
-
-
-
-
-
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Player);
@@ -9962,64 +9790,7 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-
-
-// class Player {
-//   constructor(options) {
-//     this.pos = this.pos || options.pos,
-//     this.initVel = 0,
-//     this.maxVel = 4
-//     this.width = 50,
-//     this.height = 50
-//     this.color = options.color || "blue"
-//   };
-
-//   draw(ctx) {
-//     // ctx.clearRect(0, 0, 1000, 600);
-//     ctx.fillStyle = this.color;
-//     ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height);
-//   };
-  
-//   move(direction) {
-//     const newX = this.pos[0] + (Player.MOVES[direction][0] * this.vel);
-//     const newY = this.pos[1] + (Player.MOVES[direction][1] * this.vel);
-//     const newPos = [newX, newY];
-//     this.pos = newPos
-//   };
-
-//   jump() {
-//     const posX = this.pos[0];
-//     const newY = this.pos[1] - 40;
-
-//     const newPos = [posX, newY]
-//     this.pos = newPos
-//   }
-
-//   update(deltaTime) {
-//     if (!deltaTime) return;
-
-//     this.pos[0] = this.pos[0]
-//     this.pos[1] = this.pos[1]
-//   }
-
-// };
-
-
-
-// Player.MOVES = {
-//   "up" : [0, -1],
-//   "down": [0, 1],
-//   "left": [-1, 0],
-//   "right": [1, 0],
-
-//   "up-left": [-1,-1],
-//   "up-right": [1, -1],
-//   "down-left": [-1, 1],
-//   "down-right": [1, 1]
-// };
-
-
-// export default Player;
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/brian/Desktop/bright-night/src/player1.js'");
 
 /***/ }),
 
@@ -10163,47 +9934,6 @@ class Tile {
   //   ctx.fillStyle = 'skyblue';
   //   ctx.fill();
   // }
-
-  update() {
-    // debugger
-    // if
-    //   (
-    //   detectCollision(this, this.game.player) &&
-    //   this.color === "black"
-    //   // this.game.player.jumping === false
-    // ) {
-    //   console.log(this)
-    //   // console.log(this.game.player)
-    //   this.game.player.velY = 0
-    // }
-
-    // if 
-    //   (
-    //     detectCollisionLeft(this.game.player, this) &&
-    //     this.color === "black"
-    //   ) {
-    //   console.log(this)
-    //   // console.log(this.game.player)
-    //     this.game.player.velX = 0;
-    //   }
-  }
-  //   // if (detectCollisionX(this, this.game.player)) {
-  //   //   console.log('x')
-  //   //   this.game.player.velX = 0;
-  //   // }
-
-  // if (detectCollision(this, this.game.player) && this.color === "black") {
-  //   console.log(this.pos)
-  //   this.game.player.velY = 0
-  // }
-
-  // }
-
-
-
-
-
-
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Tile);

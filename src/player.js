@@ -8,10 +8,7 @@ class Player extends Entity {
     this.width = 24,
       this.height = 24,
       this.color = "blue",
-      // this.pos = {
-      //   x: 20, // change to level start later
-      //   y: 20
-      // }
+
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
@@ -20,27 +17,8 @@ class Player extends Entity {
     this.jumping = false
     this.map = map
     this.right = true
-    // debugger
-    // this.topLeft = {
-    //   x: this.pos.x,
-    //   y: this.pos.y - this.height
-    // }
-    // this.botRight = {
-    //   x: this.pos.x + this.width,
-    //   y: this.pos.y
-    // }
-
-    // this.top = this.pos.y
-    // this.left = this.pos.x
-    // this.bot = this.pos.y + this.height;
-    // this.right = this.pos.x + this.width
   }
 
-  // draw(ctx) {
-  //   // console.log('j')
-  //   ctx.fillStyle = this.color;
-  //   ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
-  // }
     draw(ctx) {
     // console.log('j')
     if (this.map.mode === "white") {
@@ -158,11 +136,6 @@ class Player extends Entity {
     // }
 
   }
-
-
-
-
-
 }
 
 export default Player;

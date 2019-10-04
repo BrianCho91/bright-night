@@ -140,19 +140,6 @@ class Game {
     } 
   }
 
-
-  // draw(ctx) {
-  //   console.log('cear')
-  //   ctx.clearRect(0, 0, 1000, 600)
-  // }
-
-  // render(ctx) {
-  //   // debugger
-  //   ctx.clearRect(0, 0, 1000, 600)
-
-  //   this.map.render(ctx)
-  //   this.player.draw(ctx)
-  // }
 }
 
 const CONSTANTS = {
