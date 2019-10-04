@@ -8619,81 +8619,106 @@ class Collision {
 
   isColliding(entity) {
     // debugger
-    if (entity.getBot() > 600) entity.setBot(600);
+    if (entity.getBot() > 500) entity.setBot(500);
     if (entity.getLeft() < 0) entity.setLeft(0);
     if (entity.getRight() > 1000) entity.setRight(1000);
 
 
     let top, bot, right, left, value;
 // debugger
-    top = Math.floor(entity.getTop() / 50)
-    left = Math.floor(entity.getLeft() / 50)
-    value = this.map[top * 20 + left]
-    // console.log('one' + value)
-    this.collide(value, entity, left * 50, top * 50)
 
-    top = Math.floor(entity.getTop() / 50)
-    right = Math.floor(entity.getRight() / 50)
-    value = this.map[top * 20 + right]
-    this.collide(value, entity, right * 50, top * 50)
+    bot = Math.floor(entity.getBot() / 25)
+    left = Math.floor(entity.getLeft() / 25)
+    value = this.map[bot * 40 + left]
+    this.collide(value, entity, left * 25, bot * 25)
 
-    bot = Math.floor(entity.getBot() / 50)
-    left = Math.floor(entity.getLeft() / 50)
-    value = this.map[bot * 20 + left]
-    this.collide(value, entity, left * 50, bot * 50)
-
-    bot = Math.floor(entity.getBot() / 50)
-    right = Math.floor(entity.getRight() / 50)
-    value = this.map[bot * 20 + right]
-    this.collide(value, entity, right * 50, bot * 50)
+    bot = Math.floor(entity.getBot() / 25)
+    right = Math.floor(entity.getRight() / 25)
+    value = this.map[bot * 40 + right]
+    this.collide(value, entity, right * 25, bot * 25)
     
+    top = Math.floor(entity.getTop() / 25)
+    left = Math.floor(entity.getLeft() / 25)
+    value = this.map[top * 40 + left]
+    // console.log('one' + value)
+    this.collide(value, entity, left * 25, top * 25)
+
+    top = Math.floor(entity.getTop() / 25)
+    right = Math.floor(entity.getRight() / 25)
+    value = this.map[top * 40 + right]
+    this.collide(value, entity, right * 25, top * 25)
+
+
   }
 
   collide(value, entity, tileX, tileY) {
     // debugger
+    // console.log(value, tileX, tileY)
     if (value === 1) {
-      if (this.collidePlatTop(entity, tileY)) return;
-      if (this.collidePlatBot(entity, tileY + 50)) return;
-      if (this.collidePlatLeft(entity, tileX)) return;
-      (this.collidePlatRight(entity, tileX + 50));
+      if (this.collidePlatTop(entity, tileX, tileY)) return;
+      if (this.collidePlatBot(entity, tileX, tileY + 25)) return;
+      if (this.collidePlatLeft(entity, tileX, tileY)) return;
+      if (this.collidePlatRight(entity, tileX + 25, tileY)) return;
     }
   }
 
-  collidePlatTop(entity, tileTop) {
-    if (entity.getBot() > tileTop && entity.getPastBot() <= tileTop) {
-      entity.setBot(tileTop - 0.01);
+  collidePlatTop(entity, tileX, tileY) {
+    // console.log('top')
+    // debugger
+    // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
+    if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+    // if (entity.getBot() > tileY) {
+      console.log('top')
+      // entity.setPastBot(tileY -0.01)
+      entity.setBot(tileY - 0.01);
       entity.velY = 0;
       // debugger
-      // console.log(tileTop)
+      // console.log(tileY)
       return true
     }
     return false;
   }
 
-  collidePlatRight(entity, tileRight) {
-    if (entity.getLeft() < tileRight && entity.getPastRight() >= tileRight) {
-      entity.setLeft(tileRight + 0.01)
+  collidePlatRight(entity, tileX, tileY) {
+    // if (entity.getLeft() > tileX && entity.getPastLeft() <= tileX) {
+      console.log('hit')
+    if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      
+      console.log('right')
       // debugger
-      // console.log(tileRight)
+      // entity.setPastLeft(tileX + 0.01)
+      entity.setLeft(tileX + 0.01)
+      // entity.velX = 0;
+      // debugger
+      // console.log(tileX)
       return true
     }
     return false
   }
 
-  collidePlatBot(entity, tileBot) {
-    if (entity.getTop() < tileBot && entity.getPastTop() >= tileBot) {
-      entity.setTop(tileBot + 0.01);
-      // console.log(tileBot)
-      entity.velY = 3;
+  collidePlatBot(entity, tileX, tileY) {
+
+    // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
+    if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX ) {
+      console.log('bot')
+      // entity.setPastTop(tileY + 0.01)
+      entity.setTop(tileY + 0.01);
+      // console.log(tileY)
+      entity.velY = 0;
       return true;
     }
     return false;
   }
 
-  collidePlatLeft(entity, tileLeft) {
-    if (entity.getRight() > tileLeft && entity.getRight() <= tileLeft) {
-      entity.setRight(tileLeft - 0.01)
-      // console.log(tileRight)
+  collidePlatLeft(entity, tileX, tileY) {
+    // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
+    // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
+      if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      console.log('left')
+      // entity.setPastRight(tileX - 0.01)
+      entity.setRight(tileX - 0.01)
+      // console.log(tileX)
+      entity.velX = 0
       return true
     }
     return false;
@@ -8904,6 +8929,22 @@ class Entity {
 
   setLeft(x) {
     this.pos.x = x;
+  }
+
+  setPastTop(y) {
+    this.pastPos.y = y
+  }
+
+  setPastRight(x) {
+    this.pastPos.x = (x - this.width)
+  }
+
+  setPastBot(y) {
+    this.pastPos.y = (y - this.height)
+  }
+
+  setPastLeft(x) {
+    this.pastPos.x = x;
   }
 
 
@@ -9170,17 +9211,27 @@ const levels = {
     "1": {
 
       "tiles":
-        [
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-          2, 1, 1, 1, 1, 1, 1, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0,// 7
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, // 8
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, // 9
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0 // 0
        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
         ],
       "startingPos":
@@ -9231,11 +9282,11 @@ class Map {
     this.level.forEach((tile, idx) => {
       if (tile !== 0) {
         let pos = {
-          x: (idx % 20) * 50,
-          y: (Math.floor((idx / 20)) * 50)
+          x: (idx % 40) * 25,
+          y: (Math.floor((idx / 40)) * 25)
         }
-        let width = 50;
-        let height = 50;
+        let width = 25;
+        let height = 25;
         if (tile === 1) {
           // blackTiles.push(new Tile(pos, width, height, "black", this.game))
           // debugger
@@ -9336,8 +9387,8 @@ __webpack_require__.r(__webpack_exports__);
 class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
   constructor(x, y) {
     super(x, y)
-    this.width = 20,
-      this.height = 20,
+    this.width = 24,
+      this.height = 24,
       this.color = "blue",
       // this.pos = {
       //   x: 20, // change to level start later
@@ -9346,8 +9397,8 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
-    this.maxVelY = 5;
-    this.gravity = 2;
+    this.maxVelY = 8;
+    this.gravity = 3;
     this.jumping = false
     // this.topLeft = {
     //   x: this.pos.x,
@@ -9393,7 +9444,7 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
   comeDown() {
     this.jumping = false
-    this.velY = 5
+    this.velY = this.gravity
   }
 
   stop() {

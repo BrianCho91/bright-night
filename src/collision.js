@@ -8,81 +8,106 @@ class Collision {
 
   isColliding(entity) {
     // debugger
-    if (entity.getBot() > 600) entity.setBot(600);
+    if (entity.getBot() > 500) entity.setBot(500);
     if (entity.getLeft() < 0) entity.setLeft(0);
     if (entity.getRight() > 1000) entity.setRight(1000);
 
 
     let top, bot, right, left, value;
 // debugger
-    top = Math.floor(entity.getTop() / 50)
-    left = Math.floor(entity.getLeft() / 50)
-    value = this.map[top * 20 + left]
-    // console.log('one' + value)
-    this.collide(value, entity, left * 50, top * 50)
 
-    top = Math.floor(entity.getTop() / 50)
-    right = Math.floor(entity.getRight() / 50)
-    value = this.map[top * 20 + right]
-    this.collide(value, entity, right * 50, top * 50)
+    bot = Math.floor(entity.getBot() / 25)
+    left = Math.floor(entity.getLeft() / 25)
+    value = this.map[bot * 40 + left]
+    this.collide(value, entity, left * 25, bot * 25)
 
-    bot = Math.floor(entity.getBot() / 50)
-    left = Math.floor(entity.getLeft() / 50)
-    value = this.map[bot * 20 + left]
-    this.collide(value, entity, left * 50, bot * 50)
-
-    bot = Math.floor(entity.getBot() / 50)
-    right = Math.floor(entity.getRight() / 50)
-    value = this.map[bot * 20 + right]
-    this.collide(value, entity, right * 50, bot * 50)
+    bot = Math.floor(entity.getBot() / 25)
+    right = Math.floor(entity.getRight() / 25)
+    value = this.map[bot * 40 + right]
+    this.collide(value, entity, right * 25, bot * 25)
     
+    top = Math.floor(entity.getTop() / 25)
+    left = Math.floor(entity.getLeft() / 25)
+    value = this.map[top * 40 + left]
+    // console.log('one' + value)
+    this.collide(value, entity, left * 25, top * 25)
+
+    top = Math.floor(entity.getTop() / 25)
+    right = Math.floor(entity.getRight() / 25)
+    value = this.map[top * 40 + right]
+    this.collide(value, entity, right * 25, top * 25)
+
+
   }
 
   collide(value, entity, tileX, tileY) {
     // debugger
+    // console.log(value, tileX, tileY)
     if (value === 1) {
-      if (this.collidePlatTop(entity, tileY)) return;
-      if (this.collidePlatBot(entity, tileY + 50)) return;
-      if (this.collidePlatLeft(entity, tileX)) return;
-      (this.collidePlatRight(entity, tileX + 50));
+      if (this.collidePlatTop(entity, tileX, tileY)) return;
+      if (this.collidePlatBot(entity, tileX, tileY + 25)) return;
+      if (this.collidePlatLeft(entity, tileX, tileY)) return;
+      if (this.collidePlatRight(entity, tileX + 25, tileY)) return;
     }
   }
 
-  collidePlatTop(entity, tileTop) {
-    if (entity.getBot() > tileTop && entity.getPastBot() <= tileTop) {
-      entity.setBot(tileTop - 0.01);
+  collidePlatTop(entity, tileX, tileY) {
+    // console.log('top')
+    // debugger
+    // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
+    if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+    // if (entity.getBot() > tileY) {
+      console.log('top')
+      // entity.setPastBot(tileY -0.01)
+      entity.setBot(tileY - 0.01);
       entity.velY = 0;
       // debugger
-      // console.log(tileTop)
+      // console.log(tileY)
       return true
     }
     return false;
   }
 
-  collidePlatRight(entity, tileRight) {
-    if (entity.getLeft() < tileRight && entity.getPastRight() >= tileRight) {
-      entity.setLeft(tileRight + 0.01)
+  collidePlatRight(entity, tileX, tileY) {
+    // if (entity.getLeft() > tileX && entity.getPastLeft() <= tileX) {
+      console.log('hit')
+    if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      
+      console.log('right')
       // debugger
-      // console.log(tileRight)
+      // entity.setPastLeft(tileX + 0.01)
+      entity.setLeft(tileX + 0.01)
+      // entity.velX = 0;
+      // debugger
+      // console.log(tileX)
       return true
     }
     return false
   }
 
-  collidePlatBot(entity, tileBot) {
-    if (entity.getTop() < tileBot && entity.getPastTop() >= tileBot) {
-      entity.setTop(tileBot + 0.01);
-      // console.log(tileBot)
-      entity.velY = 3;
+  collidePlatBot(entity, tileX, tileY) {
+
+    // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
+    if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX ) {
+      console.log('bot')
+      // entity.setPastTop(tileY + 0.01)
+      entity.setTop(tileY + 0.01);
+      // console.log(tileY)
+      entity.velY = 0;
       return true;
     }
     return false;
   }
 
-  collidePlatLeft(entity, tileLeft) {
-    if (entity.getRight() > tileLeft && entity.getRight() <= tileLeft) {
-      entity.setRight(tileLeft - 0.01)
-      // console.log(tileRight)
+  collidePlatLeft(entity, tileX, tileY) {
+    // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
+    // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
+      if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      console.log('left')
+      // entity.setPastRight(tileX - 0.01)
+      entity.setRight(tileX - 0.01)
+      // console.log(tileX)
+      entity.velX = 0
       return true
     }
     return false;

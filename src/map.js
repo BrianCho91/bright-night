@@ -14,11 +14,11 @@ class Map {
     this.level.forEach((tile, idx) => {
       if (tile !== 0) {
         let pos = {
-          x: (idx % 20) * 50,
-          y: (Math.floor((idx / 20)) * 50)
+          x: (idx % 40) * 25,
+          y: (Math.floor((idx / 40)) * 25)
         }
-        let width = 50;
-        let height = 50;
+        let width = 25;
+        let height = 25;
         if (tile === 1) {
           // blackTiles.push(new Tile(pos, width, height, "black", this.game))
           // debugger

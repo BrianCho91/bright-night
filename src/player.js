@@ -5,8 +5,8 @@ import Entity from './entity';
 class Player extends Entity {
   constructor(x, y) {
     super(x, y)
-    this.width = 20,
-      this.height = 20,
+    this.width = 24,
+      this.height = 24,
       this.color = "blue",
       // this.pos = {
       //   x: 20, // change to level start later
@@ -15,8 +15,8 @@ class Player extends Entity {
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
-    this.maxVelY = 5;
-    this.gravity = 2;
+    this.maxVelY = 8;
+    this.gravity = 3;
     this.jumping = false
     // this.topLeft = {
     //   x: this.pos.x,
@@ -62,7 +62,7 @@ class Player extends Entity {
 
   comeDown() {
     this.jumping = false
-    this.velY = 5
+    this.velY = this.gravity
   }
 
   stop() {

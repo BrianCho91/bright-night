@@ -58,6 +58,22 @@ class Entity {
     this.pos.x = x;
   }
 
+  setPastTop(y) {
+    this.pastPos.y = y
+  }
+
+  setPastRight(x) {
+    this.pastPos.x = (x - this.width)
+  }
+
+  setPastBot(y) {
+    this.pastPos.y = (y - this.height)
+  }
+
+  setPastLeft(x) {
+    this.pastPos.x = x;
+  }
+
 
 
 
