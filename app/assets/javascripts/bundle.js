@@ -9130,7 +9130,7 @@ class Game {
     this.player.draw(ctx)
     this.map.tiles.forEach(tile => {
       // debugger
-      tile.star ? tile.drawStar(ctx) : tile.draw(ctx)
+      tile.star ? tile.draw(ctx) : tile.draw(ctx)
     })
     // this.map.render(ctx)
 
@@ -9531,8 +9531,8 @@ class Map {
           let height = 20
           let star = true
           // blackTiles.push(new Tile(pos, height, "red", this.game))
-          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "red", this.game))
-          // this.tiles.push(new Star(pos.x, pos.y, 5, 10, 15, star, this.ctx))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new _star__WEBPACK_IMPORTED_MODULE_1__["default"](this.ctx, pos.x, pos.y))
         }
       }
     })
@@ -9786,10 +9786,14 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Star {
-  constructor(x, y, spikes, outerRadius, innerRadius, star, ctx) {
+  constructor(ctx, posX, posY) {
     // // debugger
     this.star = true
     this.ctx = ctx
+    this.pos = {
+      x: posX,
+      y: posY
+    }
     // this.width = width,
     //   this.height = height,
     //   this.color = color,
@@ -9810,34 +9814,53 @@ class Star {
     // this.update();
   }
 
-  drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx) {
-
-    var rot = Math.PI / 2 * 3;
-    var x = cx;
-    var y = cy;
-    var step = Math.PI / spikes;
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(cx, cy - outerRadius)
-    for (let i = 0; i < spikes; i++) {
-      x = cx + Math.cos(rot) * outerRadius;
-      y = cy + Math.sin(rot) * outerRadius;
-      this.ctx.lineTo(x, y)
-      rot += step
-
-      x = cx + Math.cos(rot) * innerRadius;
-      y = cy + Math.sin(rot) * innerRadius;
-      this.ctx.lineTo(x, y)
-      rot += step
+  draw(ctx, posX, posY) {
+    let radius = 12;
+    let points = 5
+    let m = 0.5
+    ctx.save();
+    ctx.beginPath();
+    ctx.translate(this.pos.x, this.pos.y);
+    ctx.moveTo(0,0 - radius);
+    for (let i = 0; i < points; i++) {
+      ctx.rotate(Math.PI / points);
+      ctx.lineTo(0, 0 - (radius * m));
+      ctx.rotate(Math.PI / points);
+      ctx.lineTo(0, 0 - radius);
     }
-    this.ctx.lineTo(cx, cy - outerRadius);
-    this.ctx.closePath();
-    this.ctx.lineWidth = 5;
-    this.ctx.strokeStyle = 'blue';
-    this.ctx.stroke();
-    this.ctx.fillStyle = 'skyblue';
-    this.ctx.fill();
+    ctx.fillStyle = "red"
+    ctx.fill();
+    ctx.restore();
   }
+
+  // drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx) {
+
+  //   var rot = Math.PI / 2 * 3;
+  //   var x = cx;
+  //   var y = cy;
+  //   var step = Math.PI / spikes;
+
+  //   this.ctx.beginPath();
+  //   this.ctx.moveTo(cx, cy - outerRadius)
+  //   for (let i = 0; i < spikes; i++) {
+  //     x = cx + Math.cos(rot) * outerRadius;
+  //     y = cy + Math.sin(rot) * outerRadius;
+  //     this.ctx.lineTo(x, y)
+  //     rot += step
+
+  //     x = cx + Math.cos(rot) * innerRadius;
+  //     y = cy + Math.sin(rot) * innerRadius;
+  //     this.ctx.lineTo(x, y)
+  //     rot += step
+  //   }
+  //   this.ctx.lineTo(cx, cy - outerRadius);
+  //   this.ctx.closePath();
+  //   this.ctx.lineWidth = 5;
+  //   this.ctx.strokeStyle = 'blue';
+  //   this.ctx.stroke();
+  //   this.ctx.fillStyle = 'skyblue';
+  //   this.ctx.fill();
+  // }
 
 }
 

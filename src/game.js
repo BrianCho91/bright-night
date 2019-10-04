@@ -57,7 +57,7 @@ class Game {
     this.player.draw(ctx)
     this.map.tiles.forEach(tile => {
       // debugger
-      tile.star ? tile.drawStar(ctx) : tile.draw(ctx)
+      tile.star ? tile.draw(ctx) : tile.draw(ctx)
     })
     // this.map.render(ctx)
 

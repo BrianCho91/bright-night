@@ -43,8 +43,8 @@ class Map {
           let height = 20
           let star = true
           // blackTiles.push(new Tile(pos, height, "red", this.game))
-          this.tiles.push(new Tile(pos, width, height, "red", this.game))
-          // this.tiles.push(new Star(pos.x, pos.y, 5, 10, 15, star, this.ctx))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Star(this.ctx, pos.x, pos.y))
         }
       }
     })
