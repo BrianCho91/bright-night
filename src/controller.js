@@ -65,6 +65,7 @@ class Controller {
         case 32: // space
           // debugger
           this.map.flipMap();
+          this.map.flipTiles()
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')

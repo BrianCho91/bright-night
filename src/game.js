@@ -25,6 +25,7 @@ class Game {
     this.color = "black"
     // this.gameOver = true
     this.deathCount = 0
+    this.mode = "white"
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -129,6 +130,7 @@ class Game {
       // debugger
       this.deathCount += 1
       this.startingPos = levels[this.level].startingPos
+      // if (this.map.mode === "black") this.map.flipTiles()
       this.map = new Map(levels[this.level].tiles, this, this.ctx);
       this.player = new Player(this.startingPos[0], this.startingPos[1], this.map);
       this.controller = new Controller(this.player, this.map, this.ctx, this);

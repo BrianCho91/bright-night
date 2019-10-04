@@ -8,6 +8,7 @@ class Map {
     // this.numLevel = 1
     // debugger
     this.level = level
+    this.dupeLevel = this.level.slice(0)
     this.game = game
     this.tiles = [];
     this.ctx = ctx
@@ -20,7 +21,7 @@ class Map {
     let whiteTiles = [];
     this.tiles = []
     // debugger
-    this.level.forEach((tile, idx) => {
+    this.dupeLevel.forEach((tile, idx) => {
       if (tile !== 0) {
         let pos = {
           x: (idx % 40) * 25,
@@ -52,15 +53,37 @@ class Map {
     return this.tiles
   }
 
-  flipMap() {
+  flipTiles() {
     // debugger
-    for (let i = 0; i < this.level.length; i++) {
-      if (this.level[i] === 1) {
-        this.level[i] = 2
-      } else if (this.level[i] === 2) {
-        this.level[i] = 1
+    for (let i = 0; i < this.dupeLevel.length; i++) {
+      // debugger
+      if (this.dupeLevel[i] === 1) {
+        this.dupeLevel[i] = 2
+      } else if (this.dupeLevel[i] === 2) {
+        this.dupeLevel[i] = 1
       }
     }
+  }
+
+  flipMap() {
+
+    // for (let i = 0; i < this.level.length; i++) {
+    //   if (this.mode === "white") {
+    //     if (this.level[i] === 1) {
+    //       this.level[i].color = "white"
+    //   } else if (this.level[i] === 2) {
+    //       this.level[i] = "grey"
+    //     }
+    //   } else {
+    //     if (this.level[i] === 1) {
+    //       this.level[i].color = "white"
+    //     } else if (this.level[i] === 2) {
+    //       this.level[i] = "lightgrey"
+    //     }
+    //   }
+
+    // }
+
     // this.level.forEach(tile => {
     //   // debugger
     //   tile === 1 ? tile = 2 : tile = 1
@@ -97,8 +120,10 @@ class Map {
       this.ctx.fillStyle = "black"
       this.ctx.fillRect(0, 0, 1000, 600)
       this.mode = "black"
+      this.game.mode = "black"
     } else {
       this.mode = "white"
+      this.game.mode = "white"
     }
 
   }

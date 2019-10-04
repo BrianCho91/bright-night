@@ -4,7 +4,7 @@ class Collision {
     // debugger
     this.map = map
     this.game = game
-    this.level = map.level
+    this.level = map.dupeLevel
     // console.log(map)
   }
 
