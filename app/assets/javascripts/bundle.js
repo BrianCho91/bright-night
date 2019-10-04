@@ -8621,7 +8621,7 @@ class Collision {
 
   isColliding(entity) {
     // debugger
-    if (entity.getBot() > 500) entity.setBot(500);
+    // if (entity.getBot() > 500) entity.setBot(500);
     if (entity.getLeft() < 0) entity.setLeft(0);
     if (entity.getRight() > 1000) entity.setRight(1000);
 
@@ -9098,6 +9098,8 @@ class Game {
     this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map, this, this.player)
     this.tiles = [];
     this.color = "black"
+    // this.gameOver = true
+    this.deathCount = 0
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -9132,20 +9134,62 @@ class Game {
       tile.star ? tile.drawStar(ctx) : tile.draw(ctx)
     })
     // this.map.render(ctx)
+
+    if (this.map.mode === "white") {
+      ctx.font = "25px Roboto";
+      ctx.fillStyle = "black"
+      ctx.fillText("Level: " + this.level, 30, 54)
+
+      ctx.font = "25px Roboto"; // death counter
+      ctx.fillText(this.deathCount, 165, 54)
+
+      ctx.fillStyle = "black"
+      ctx.fillRect(130, 35, 25, 15) // head
+      ctx.fillRect(135, 50, 15, 8) // teeth
+      ctx.fillStyle = "white" 
+      ctx.fillRect(136, 39, 5, 6) // eyes
+      ctx.fillRect(144, 39, 5, 6)
+      
+      ctx.fillRect(139, 53, 1, 9) // teeth
+      ctx.fillRect(142, 53, 1, 9)
+      ctx.fillRect(145, 53, 1, 9)
+    } else {
+      ctx.font = "25px Roboto";
+      ctx.fillStyle = "white"
+      ctx.fillText("Level: " + this.level, 30, 54)
+
+      ctx.font = "25px Roboto"; // death counter
+      ctx.fillText(this.deathCount, 165, 54)
+
+      ctx.fillStyle = "white"
+      ctx.fillRect(130, 35, 25, 15) // head
+      ctx.fillRect(135, 50, 15, 8) // teeth
+      ctx.fillStyle = "black"
+      ctx.fillRect(136, 39, 5, 6) // eyes
+      ctx.fillRect(144, 39, 5, 6)
+
+      ctx.fillRect(139, 53, 1, 9) // teeth
+      ctx.fillRect(142, 53, 1, 9)
+      ctx.fillRect(145, 53, 1, 9)
+    }
   }
 
   start() {
     // debugger
     // this.tiles = buildLevel(levels[1].tiles, this)
+    // this.gameOver = false
     this.map.create(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
     // this.map.create(this)
     this.lastTime = 0;
+
     // this.controller.keyboardHandlers();
     requestAnimationFrame(this.animate.bind(this))
   }
 
   animate(time) {
     const dt = time - this.lastTime;
+
+    this.gameOver()
     this.draw(this.ctx)
     // this.tiles.forEach(tile => tile.update())
     this.player.update(dt)
@@ -9154,6 +9198,21 @@ class Game {
 
     requestAnimationFrame(this.animate.bind(this))
   }
+
+  gameOver() {
+    if (this.player.pos.y > 500) {
+      // debugger
+      this.deathCount += 1
+      this.startingPos = _level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].startingPos
+      this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].tiles, this, this.ctx);
+      this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](this.startingPos[0], this.startingPos[1], this.map);
+      this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx, this);
+      this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map, this, this.player)
+      this.map.tiles = [];
+      this.map.create()
+    } 
+  }
+
 
   // draw(ctx) {
   //   console.log('cear')
@@ -9409,15 +9468,15 @@ const levels = {
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+          0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
         // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
       ],
     "startingPos":

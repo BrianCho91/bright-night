@@ -10,7 +10,7 @@ class Collision {
 
   isColliding(entity) {
     // debugger
-    if (entity.getBot() > 500) entity.setBot(500);
+    // if (entity.getBot() > 500) entity.setBot(500);
     if (entity.getLeft() < 0) entity.setLeft(0);
     if (entity.getRight() > 1000) entity.setRight(1000);
 
