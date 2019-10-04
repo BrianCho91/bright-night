@@ -6,12 +6,12 @@ class Controller {
     this.player = player;
     this.map = map;
     this.ctx = ctx
-    this.keyboardHandlers = this.keyboardHandlers.bind(this);
+    // this.keyboardHandlers = this.keyboardHandlers.bind(this);
 
     // this.keyboardHandlers();
-  }
+  
 
-  keyboardHandlers() {
+  // keyboardHandlers() {
 
     // document.addEventListener("keypress", (e) => {
     //   if (e.keyCode === 38 || 87) {
@@ -20,25 +20,41 @@ class Controller {
     //     // break;
     //   }
     // })
-
+    // this.jumpEvent = false; 
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
+
         case 38 && 87: // up arrow
           // console.log("w")
-          this.player.jumping = false;
-          this.player.jump();
-          break;
 
-        case 40 && 83: // down arrow
-
-          this.player.move("down");
-          // console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          if (this.player.jumping === false) {
+            this.player.jump();
+            this._timeout = setTimeout(() => {
+              if (this.player.jumping === true)
+                this.player.comeDown()
+                // this.player.jumping = false
+            }, 300)
+          }
           break;
+          
+        // case 38 && 87: // up arrow
+        //   // console.log("w")
+
+        //   if (this.player.jumping === false) {
+        //     this.player.jump();
+        //   }
+        //   break;
+
+        // case 40 && 83: // down arrow
+
+        //   this.player.move("down");
+        //   // console.log(this.player.pos)
+        //   this.player.draw(this.ctx)
+        //   break;
 
         case 37 && 65: // left arrow
 
-          this.player.moveLeft(); 
+          this.player.moveLeft();
           break;
 
         case 39 && 68: // right arrow
@@ -47,7 +63,7 @@ class Controller {
           break;
 
         case 32: // space
-        // debugger
+          // debugger
           this.map.flipMap();
 
         // case 38 && 39: // doesnt work
@@ -69,17 +85,26 @@ class Controller {
     document.addEventListener("keyup", (e) => {
       // debugger
       switch (e.keyCode) {
+        // case 38 && 87: // up arrow
+        //   // console.log("w")
+        //   if (this.player.jumping) {
+        //     clearTimeout(this._timeout)
+        //     this.player.comeDown()
+        //   }
+        //   break;
+
         case 38 && 87: // up arrow
           // console.log("w")
-          if (this.player.velY < 5)
+          // if (this.player.jumping)
+          // this.player.jumping = false
             this.player.comeDown()
           break;
 
-        case 40 && 83: // down arrow
+        // case 40 && 83: // down arrow
 
-          if (this.player.velY > 0)
-            this.player.stop();
-          break;
+        //   if (this.player.velY > 0)
+        //     this.player.stop();
+        //   break;
 
         case 37 && 65: // left arrow
           if (this.player.velX < 0)
@@ -110,6 +135,7 @@ class Controller {
       }
     })
   }
+  // }
 }
 
 export default Controller;

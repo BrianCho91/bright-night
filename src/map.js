@@ -1,16 +1,25 @@
 import Tile from './tile';
+import Star from './star';
+import { levels } from './level'
 
 class Map {
-  constructor(level, game) {
-    this.level = level,
-      this.game = game
-      this.tiles = [];
+  constructor(level, game, ctx) {
+    // debugger
+    // this.numLevel = 1
+    // debugger
+    this.level = level
+    this.game = game
+    this.tiles = [];
+    this.ctx = ctx
+    this.mode = "white"
   }
 
   create() {
+    // debugger
     let blackTiles = [];
     let whiteTiles = [];
-// debugger
+    this.tiles = []
+    // debugger
     this.level.forEach((tile, idx) => {
       if (tile !== 0) {
         let pos = {
@@ -27,12 +36,14 @@ class Map {
         if (tile === 2) {
           // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
-          this.tiles.push(new Tile(pos, width, height, "grey", this.game))
+          this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
         }
-        if (tile === 3) {
+        if (tile === 9) {
           let height = 20
+          let star = true
           // blackTiles.push(new Tile(pos, height, "red", this.game))
           this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          // this.tiles.push(new Star(pos.x, pos.y, 5, 10, 15, star, this.ctx))
         }
       }
     })
@@ -58,10 +69,41 @@ class Map {
     // this.tiles = [];
     // this.create();
 
+    // this.tiles.forEach(tile => {
+    //   if (tile.color === "black") {
+    //     tile.color = "lightgrey"
+    //   } else if (tile.color === "lightgrey") {
+    //     tile.color = "black"
+    //   }
+    // })
+
     this.tiles.forEach(tile => {
-      tile.color === "black" ? tile.color = "grey" : tile.color = "black"
+      if (this.mode === "white") {
+        if (tile.color === "black") {
+          tile.color = "grey"
+        } else if (tile.color === "lightgrey") {
+          tile.color = "white"
+        }
+      } else {
+        if (tile.color === "grey") {
+          tile.color = "black"
+        } else if (tile.color === "white") {
+          tile.color = "lightgrey"
+        }
+      }
     })
+
+    if (this.mode === "white") {
+      this.ctx.fillStyle = "black"
+      this.ctx.fillRect(0, 0, 1000, 600)
+      this.mode = "black"
+    } else {
+      this.mode = "white"
+    }
+
   }
+
+
 
 
   // collidingWithMap(player) {

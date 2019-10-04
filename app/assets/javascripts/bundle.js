@@ -8610,10 +8610,12 @@ function extend() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Collision {
-  constructor(map) {
-    // this.player = player
+  constructor(map, game, player) {
+    this.player = player
     // debugger
-    this.map = map.level
+    this.map = map
+    this.game = game
+    this.level = map.level
     // console.log(map)
   }
 
@@ -8629,23 +8631,23 @@ class Collision {
 
     bot = Math.floor(entity.getBot() / 25)
     left = Math.floor(entity.getLeft() / 25)
-    value = this.map[bot * 40 + left]
+    value = this.level[bot * 40 + left]
     this.collide(value, entity, left * 25, bot * 25)
 
     bot = Math.floor(entity.getBot() / 25)
     right = Math.floor(entity.getRight() / 25)
-    value = this.map[bot * 40 + right]
+    value = this.level[bot * 40 + right]
     this.collide(value, entity, right * 25, bot * 25)
     
     top = Math.floor(entity.getTop() / 25)
     left = Math.floor(entity.getLeft() / 25)
-    value = this.map[top * 40 + left]
+    value = this.level[top * 40 + left]
     // console.log('one' + value)
     this.collide(value, entity, left * 25, top * 25)
 
     top = Math.floor(entity.getTop() / 25)
     right = Math.floor(entity.getRight() / 25)
-    value = this.map[top * 40 + right]
+    value = this.level[top * 40 + right]
     this.collide(value, entity, right * 25, top * 25)
 
 
@@ -8654,11 +8656,18 @@ class Collision {
   collide(value, entity, tileX, tileY) {
     // debugger
     // console.log(value, tileX, tileY)
+    // console.log(value)
     if (value === 1) {
       if (this.collidePlatTop(entity, tileX, tileY)) return;
       if (this.collidePlatBot(entity, tileX, tileY + 25)) return;
       if (this.collidePlatLeft(entity, tileX, tileY)) return;
       if (this.collidePlatRight(entity, tileX + 25, tileY)) return;
+    }
+    else if (value === 9) {
+      if (this.collidePlatTopFin(entity, tileX, tileY)) return;
+      if (this.collidePlatBotFin(entity, tileX, tileY + 25)) return;
+      if (this.collidePlatLeftFin(entity, tileX, tileY)) return;
+      if (this.collidePlatRightFin(entity, tileX + 25, tileY)) return;
     }
   }
 
@@ -8668,10 +8677,11 @@ class Collision {
     // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
     if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
     // if (entity.getBot() > tileY) {
-      console.log('top')
+      // console.log('top')
       // entity.setPastBot(tileY -0.01)
       entity.setBot(tileY - 0.01);
       entity.velY = 0;
+      this.player.jumping = false
       // debugger
       // console.log(tileY)
       return true
@@ -8681,14 +8691,14 @@ class Collision {
 
   collidePlatRight(entity, tileX, tileY) {
     // if (entity.getLeft() > tileX && entity.getPastLeft() <= tileX) {
-      console.log('hit')
+      // console.log('hit')
     if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
       
-      console.log('right')
+      // console.log('right')
       // debugger
       // entity.setPastLeft(tileX + 0.01)
       entity.setLeft(tileX + 0.01)
-      // entity.velX = 0;
+      entity.velX = 0;
       // debugger
       // console.log(tileX)
       return true
@@ -8700,7 +8710,7 @@ class Collision {
 
     // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
     if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX ) {
-      console.log('bot')
+      // console.log('bot')
       // entity.setPastTop(tileY + 0.01)
       entity.setTop(tileY + 0.01);
       // console.log(tileY)
@@ -8714,7 +8724,7 @@ class Collision {
     // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
     // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
       if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
-      console.log('left')
+      // console.log('left')
       // entity.setPastRight(tileX - 0.01)
       entity.setRight(tileX - 0.01)
       // console.log(tileX)
@@ -8724,6 +8734,72 @@ class Collision {
     return false;
   }
 
+  collidePlatTopFin(entity, tileX, tileY) {
+    // console.log('top')
+    // debugger
+    // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
+    if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+      // if (entity.getBot() > tileY) {
+      console.log('top')
+      // debugger
+      this.game.changeLevel()
+      // entity.setPastBot(tileY -0.01)
+      entity.setBot(tileY - 0.01);
+      entity.velY = 0;
+      // debugger
+      // console.log(tileY)
+      return true
+    }
+    return false;
+  }
+
+  collidePlatRightFin(entity, tileX, tileY) {
+    // if (entity.getLeft() > tileX && entity.getPastLeft() <= tileX) {
+    // console.log('hit')
+    if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+
+      // console.log('right')
+      // debugger
+      // entity.setPastLeft(tileX + 0.01)
+      this.game.changeLevel()
+      entity.setLeft(tileX + 0.01)
+      entity.velX = 0;
+      // debugger
+      // console.log(tileX)
+      return true
+    }
+    return false
+  }
+
+  collidePlatBotFin(entity, tileX, tileY) {
+
+    // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
+    if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+      // console.log('bot')
+      // entity.setPastTop(tileY + 0.01)
+      this.game.changeLevel()
+      entity.setTop(tileY + 0.01);
+      // console.log(tileY)
+      entity.velY = 0;
+      return true;
+    }
+    return false;
+  }
+
+  collidePlatLeftFin(entity, tileX, tileY) {
+    // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
+    // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
+    if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      // console.log('left')
+      // entity.setPastRight(tileX - 0.01)
+      this.game.changeLevel()
+      entity.setRight(tileX - 0.01)
+      // console.log(tileX)
+      entity.velX = 0
+      return true
+    }
+    return false;
+  }
 
 }
 
@@ -8752,12 +8828,12 @@ class Controller {
     this.player = player;
     this.map = map;
     this.ctx = ctx
-    this.keyboardHandlers = this.keyboardHandlers.bind(this);
+    // this.keyboardHandlers = this.keyboardHandlers.bind(this);
 
     // this.keyboardHandlers();
-  }
+  
 
-  keyboardHandlers() {
+  // keyboardHandlers() {
 
     // document.addEventListener("keypress", (e) => {
     //   if (e.keyCode === 38 || 87) {
@@ -8766,25 +8842,41 @@ class Controller {
     //     // break;
     //   }
     // })
-
+    // this.jumpEvent = false; 
     document.addEventListener("keydown", (e) => {
       switch (e.keyCode) {
+
         case  true && 87: // up arrow
           // console.log("w")
-          this.player.jumping = false;
-          this.player.jump();
-          break;
 
-        case  true && 83: // down arrow
-
-          this.player.move("down");
-          // console.log(this.player.pos)
-          this.player.draw(this.ctx)
+          if (this.player.jumping === false) {
+            this.player.jump();
+            this._timeout = setTimeout(() => {
+              if (this.player.jumping === true)
+                this.player.comeDown()
+                // this.player.jumping = false
+            }, 300)
+          }
           break;
+          
+        // case 38 && 87: // up arrow
+        //   // console.log("w")
+
+        //   if (this.player.jumping === false) {
+        //     this.player.jump();
+        //   }
+        //   break;
+
+        // case 40 && 83: // down arrow
+
+        //   this.player.move("down");
+        //   // console.log(this.player.pos)
+        //   this.player.draw(this.ctx)
+        //   break;
 
         case  true && 65: // left arrow
 
-          this.player.moveLeft(); 
+          this.player.moveLeft();
           break;
 
         case  true && 68: // right arrow
@@ -8793,7 +8885,7 @@ class Controller {
           break;
 
         case 32: // space
-        // debugger
+          // debugger
           this.map.flipMap();
 
         // case 38 && 39: // doesnt work
@@ -8815,17 +8907,26 @@ class Controller {
     document.addEventListener("keyup", (e) => {
       // debugger
       switch (e.keyCode) {
+        // case 38 && 87: // up arrow
+        //   // console.log("w")
+        //   if (this.player.jumping) {
+        //     clearTimeout(this._timeout)
+        //     this.player.comeDown()
+        //   }
+        //   break;
+
         case  true && 87: // up arrow
           // console.log("w")
-          if (this.player.velY < 5)
+          // if (this.player.jumping)
+          // this.player.jumping = false
             this.player.comeDown()
           break;
 
-        case  true && 83: // down arrow
+        // case 40 && 83: // down arrow
 
-          if (this.player.velY > 0)
-            this.player.stop();
-          break;
+        //   if (this.player.velY > 0)
+        //     this.player.stop();
+        //   break;
 
         case  true && 65: // left arrow
           if (this.player.velX < 0)
@@ -8856,6 +8957,7 @@ class Controller {
       }
     })
   }
+  // }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Controller);
@@ -8976,6 +9078,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import levels from './level'
 
 
 class Game {
@@ -8985,10 +9088,14 @@ class Game {
     // // debugger
     // this.tile = new Tile()
     // this.map = new Map(this.ctx)
-    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this, this.color);
-    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](20, 20);
+    this.level = 1
+    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].tiles, this, this.ctx);
+    this.startingPos = _level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].startingPos
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](this.startingPos[0], this.startingPos[1], this.map);
+    // this.map = new Map(this)
+    // debugger
     this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx, this);
-    this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map)
+    this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map, this, this.player)
     this.tiles = [];
     this.color = "black"
     // // this.controller = new Controller(this.player, this.map, ctx)
@@ -8996,14 +9103,34 @@ class Game {
     // this.render(ctx);
   };
 
+  changeLevel() {
+    // debugger
+    this.level += 1
+    this.startingPos = _level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].startingPos
+    this.map = new _map__WEBPACK_IMPORTED_MODULE_1__["default"](_level__WEBPACK_IMPORTED_MODULE_4__["levels"][this.level].tiles, this, this.ctx);
+    this.player = new _player__WEBPACK_IMPORTED_MODULE_0__["default"](this.startingPos[0], this.startingPos[1], this.map);
+    this.controller = new _controller__WEBPACK_IMPORTED_MODULE_2__["default"](this.player, this.map, this.ctx, this);
+    this.collision = new _collision__WEBPACK_IMPORTED_MODULE_5__["default"](this.map, this, this.player)
+    this.map.tiles = [];
+    this.map.create()
+  }
+
   draw(ctx) {
     // debugger
-    ctx.clearRect(0, 0, 1000, 600)
+    if (this.map.mode === "white") {
+      ctx.clearRect(0, 0, 1000, 600) 
+    } else {
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, 1000, 600)
+    }
+    // ctx.clearRect(0, 0, 1000, 600)
     // debugger
     // this.tiles.forEach(tile => tile.draw(ctx))
     this.player.draw(ctx)
-    this.map.tiles.forEach(tile => tile.draw(ctx))
-
+    this.map.tiles.forEach(tile => {
+      // debugger
+      tile.star ? tile.drawStar(ctx) : tile.draw(ctx)
+    })
     // this.map.render(ctx)
   }
 
@@ -9011,8 +9138,9 @@ class Game {
     // debugger
     // this.tiles = buildLevel(levels[1].tiles, this)
     this.map.create(_level__WEBPACK_IMPORTED_MODULE_4__["levels"][1].tiles, this);
+    // this.map.create(this)
     this.lastTime = 0;
-    this.controller.keyboardHandlers();
+    // this.controller.keyboardHandlers();
     requestAnimationFrame(this.animate.bind(this))
   }
 
@@ -9208,10 +9336,68 @@ __webpack_require__.r(__webpack_exports__);
 // }
 
 const levels = {
-    "1": {
+  "1": {
 
-      "tiles":
-        [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 2
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 3
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 4
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 5
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,// 7
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 8
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,  // 9
+        0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,// 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [250, 250]
+  },
+  "2": {
+
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, // 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+        0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [700, 50]
+  },
+    "3": {
+
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
@@ -9219,24 +9405,111 @@ const levels = {
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
-          0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
-          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
-          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
-          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0,// 7
-          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, // 8
-          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, // 9
-          0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0 // 0
-       // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
-        ],
-      "startingPos":
-        [250, 250]
-    }
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [50, 50]
+  },
+  "4": {
+
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [250, 250]
+  },
+  "5": {
+
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [250, 250]
+  },
+  "6": {
+
+    "tiles":
+      [//1,2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, //4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 1
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 2
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 3
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
+        // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
+      ],
+    "startingPos":
+      [250, 250]
+  },
 }
 
 // export default levels;
@@ -9266,19 +9539,30 @@ const levels = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tile */ "./src/tile.js");
+/* harmony import */ var _star__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./star */ "./src/star.js");
+/* harmony import */ var _level__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./level */ "./src/level.js");
+
+
 
 
 class Map {
-  constructor(level, game) {
-    this.level = level,
-      this.game = game
-      this.tiles = [];
+  constructor(level, game, ctx) {
+    // debugger
+    // this.numLevel = 1
+    // debugger
+    this.level = level
+    this.game = game
+    this.tiles = [];
+    this.ctx = ctx
+    this.mode = "white"
   }
 
   create() {
+    // debugger
     let blackTiles = [];
     let whiteTiles = [];
-// debugger
+    this.tiles = []
+    // debugger
     this.level.forEach((tile, idx) => {
       if (tile !== 0) {
         let pos = {
@@ -9295,12 +9579,14 @@ class Map {
         if (tile === 2) {
           // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
-          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "grey", this.game))
+          this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "lightgrey", this.game))
         }
-        if (tile === 3) {
+        if (tile === 9) {
           let height = 20
+          let star = true
           // blackTiles.push(new Tile(pos, height, "red", this.game))
           this.tiles.push(new _tile__WEBPACK_IMPORTED_MODULE_0__["default"](pos, width, height, "red", this.game))
+          // this.tiles.push(new Star(pos.x, pos.y, 5, 10, 15, star, this.ctx))
         }
       }
     })
@@ -9326,10 +9612,41 @@ class Map {
     // this.tiles = [];
     // this.create();
 
+    // this.tiles.forEach(tile => {
+    //   if (tile.color === "black") {
+    //     tile.color = "lightgrey"
+    //   } else if (tile.color === "lightgrey") {
+    //     tile.color = "black"
+    //   }
+    // })
+
     this.tiles.forEach(tile => {
-      tile.color === "black" ? tile.color = "grey" : tile.color = "black"
+      if (this.mode === "white") {
+        if (tile.color === "black") {
+          tile.color = "grey"
+        } else if (tile.color === "lightgrey") {
+          tile.color = "white"
+        }
+      } else {
+        if (tile.color === "grey") {
+          tile.color = "black"
+        } else if (tile.color === "white") {
+          tile.color = "lightgrey"
+        }
+      }
     })
+
+    if (this.mode === "white") {
+      this.ctx.fillStyle = "black"
+      this.ctx.fillRect(0, 0, 1000, 600)
+      this.mode = "black"
+    } else {
+      this.mode = "white"
+    }
+
   }
+
+
 
 
   // collidingWithMap(player) {
@@ -9385,8 +9702,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
-  constructor(x, y) {
-    super(x, y)
+  constructor(x, y, map) {
+    super(x, y, map)
     this.width = 24,
       this.height = 24,
       this.color = "blue",
@@ -9397,9 +9714,12 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
-    this.maxVelY = 8;
+    this.maxVelY = 6;
     this.gravity = 3;
     this.jumping = false
+    this.map = map
+    this.right = true
+    // debugger
     // this.topLeft = {
     //   x: this.pos.x,
     //   y: this.pos.y - this.height
@@ -9415,10 +9735,82 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     // this.right = this.pos.x + this.width
   }
 
-  draw(ctx) {
+  // draw(ctx) {
+  //   // console.log('j')
+  //   ctx.fillStyle = this.color;
+  //   ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
+  // }
+    draw(ctx) {
     // console.log('j')
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
+    if (this.map.mode === "white") {
+      if (this.right === true) {
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
+        ctx.fillStyle = "white";
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
+        // ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 2, this.width - 8, 8) // face
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 10, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillRect(this.pos.x + 16, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 14, this.pos.y + 22, 8, 2) // feet
+        ctx.fillRect(this.pos.x + 3, this.pos.y + 22, 8, 2) 
+      } else {
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
+        ctx.fillStyle = "white";
+        // ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
+        ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 2, this.width - 8, 8) // face
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 6, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillRect(this.pos.x + 12, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 14, this.pos.y + 22, 8, 2) // feet
+        ctx.fillRect(this.pos.x + 3, this.pos.y + 22, 8, 2) 
+      }
+    } else {
+      if (this.right === true) {
+        ctx.fillStyle = "white";
+        ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
+        ctx.fillStyle = "black";
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
+        // ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 2, this.width - 8, 8) // face
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 10, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillRect(this.pos.x + 16, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 14, this.pos.y + 22, 8, 2) // feet
+        ctx.fillRect(this.pos.x + 3, this.pos.y + 22, 8, 2)
+      } else {
+        ctx.fillStyle = "white";
+        ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
+        ctx.fillStyle = "black";
+        // ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
+        ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
+        ctx.fillStyle = "black"
+        ctx.fillRect(this.pos.x + 4, this.pos.y + 2, this.width - 8, 8) // face
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 6, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillRect(this.pos.x + 12, this.pos.y + 3, 2, 6) // eyes
+        ctx.fillStyle = "white"
+        ctx.fillRect(this.pos.x + 14, this.pos.y + 22, 8, 2) // feet
+        ctx.fillRect(this.pos.x + 3, this.pos.y + 22, 8, 2)
+      }
+    }
   }
 
   moveLeft() {
@@ -9427,23 +9819,25 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
     //   console.log('hi')  
     //   return
     // }
+    this.right = false
     this.velX = -this.maxVelX
   }
 
   moveRight() {
+    this.right = true
     this.velX = this.maxVelX
   }
 
   jump() {
-    if (this.pos.y === 600 - this.height)
-      // if (!this.jumping) {
-      this.jumping = true
-      this.velY = -this.maxVelY
-    // }
+    // if (this.pos.y === 600 - this.height)
+      if (!this.jumping) {
+        this.velY = -this.maxVelY
+        this.jumping = true
+    }
   }
 
   comeDown() {
-    this.jumping = false
+    // this.jumping = false
     this.velY = this.gravity
   }
 
@@ -9542,6 +9936,75 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 
 /***/ }),
 
+/***/ "./src/star.js":
+/*!*********************!*\
+  !*** ./src/star.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Star {
+  constructor(x, y, spikes, outerRadius, innerRadius, star, ctx) {
+    // // debugger
+    this.star = true
+    this.ctx = ctx
+    // this.width = width,
+    //   this.height = height,
+    //   this.color = color,
+    //   this.pos = pos,
+    //   this.game = game
+    // this.topLeft = {
+    //   x: pos.x,
+    //   y: pos.y - this.height
+    // }
+    // this.botRight = {
+    //   x: pos.x + this.width,
+    //   y: pos.y
+    // }
+    // // this.pos = {
+    //   x: 250, // change to level start later
+    //   y: 250
+    // }
+    // this.update();
+  }
+
+  drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx) {
+
+    var rot = Math.PI / 2 * 3;
+    var x = cx;
+    var y = cy;
+    var step = Math.PI / spikes;
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx, cy - outerRadius)
+    for (let i = 0; i < spikes; i++) {
+      x = cx + Math.cos(rot) * outerRadius;
+      y = cy + Math.sin(rot) * outerRadius;
+      this.ctx.lineTo(x, y)
+      rot += step
+
+      x = cx + Math.cos(rot) * innerRadius;
+      y = cy + Math.sin(rot) * innerRadius;
+      this.ctx.lineTo(x, y)
+      rot += step
+    }
+    this.ctx.lineTo(cx, cy - outerRadius);
+    this.ctx.closePath();
+    this.ctx.lineWidth = 5;
+    this.ctx.strokeStyle = 'blue';
+    this.ctx.stroke();
+    this.ctx.fillStyle = 'skyblue';
+    this.ctx.fill();
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Star);
+
+/***/ }),
+
 /***/ "./src/tile.js":
 /*!*********************!*\
   !*** ./src/tile.js ***!
@@ -9555,7 +10018,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Tile {
-  constructor(pos, width, height, color, game) {
+  constructor(pos, width, height, color, game, star) {
     // debugger
     this.width = width,
       this.height = height,
@@ -9570,6 +10033,7 @@ class Tile {
         x: pos.x + this.width,
         y: pos.y
       }
+      this.star = false
     // this.pos = {
     //   x: 250, // change to level start later
     //   y: 250
@@ -9583,6 +10047,35 @@ class Tile {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos.x, this.pos.y, this.width, this.height)
   }
+
+  // drawStar(cx, cy, spikes, outerRadius, innerRadius, color) {
+
+  //   var rot = Math.PI / 2 * 3;
+  //   var x = cx;
+  //   var y = cy;
+  //   var step = Math.PI / spikes;
+
+  //   ctx.beginPath();
+  //   ctx.moveTo(cx, cy - outerRadius)
+  //   for (i = 0; i < spikes; i++) {
+  //     x = cx + Math.cos(rot) * outerRadius;
+  //     y = cy + Math.sin(rot) * outerRadius;
+  //     ctx.lineTo(x, y)
+  //     rot += step
+
+  //     x = cx + Math.cos(rot) * innerRadius;
+  //     y = cy + Math.sin(rot) * innerRadius;
+  //     ctx.lineTo(x, y)
+  //     rot += step
+  //   }
+  //   ctx.lineTo(cx, cy - outerRadius);
+  //   ctx.closePath();
+  //   ctx.lineWidth = 5;
+  //   ctx.strokeStyle = 'blue';
+  //   ctx.stroke();
+  //   ctx.fillStyle = 'skyblue';
+  //   ctx.fill();
+  // }
 
   update() {
     // debugger
