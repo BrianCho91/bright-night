@@ -1,4 +1,3 @@
-import Player from './player1';
 import Map from './map';
 
 class Controller {

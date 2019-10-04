@@ -1,5 +1,3 @@
-
-import Player from './player1';
 import Game from './game';
 import Controller from './controller';
 import Map from './map';

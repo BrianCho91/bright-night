@@ -8817,10 +8817,7 @@ class Collision {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player1 */ "./src/player1.js");
-/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_player1__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map */ "./src/map.js");
-
+/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map */ "./src/map.js");
 
 
 class Controller {
@@ -9264,14 +9261,10 @@ class GameView {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player1 */ "./src/player1.js");
-/* harmony import */ var _player1__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_player1__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ "./src/game.js");
-/* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
-/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./map */ "./src/map.js");
-/* harmony import */ var _game_view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game_view */ "./src/game_view.js");
-
-
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+/* harmony import */ var _controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controller */ "./src/controller.js");
+/* harmony import */ var _map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map */ "./src/map.js");
+/* harmony import */ var _game_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./game_view */ "./src/game_view.js");
 
 
 
@@ -9283,7 +9276,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const ctx = canvas.getContext('2d')
 
   // let game = new Game(ctx);
-  let game = new _game__WEBPACK_IMPORTED_MODULE_1__["default"](ctx);
+  let game = new _game__WEBPACK_IMPORTED_MODULE_0__["default"](ctx);
   game.start()
 
 });
@@ -9416,7 +9409,7 @@ const levels = {
         // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
       ],
     "startingPos":
-      [250, 250]
+      [250, 300]
   },
   "5": {
 
@@ -9438,14 +9431,14 @@ const levels = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 4
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 5
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 6
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 7
-        0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, // 8
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0,// 7
+        0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, // 8
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 9
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0
         // 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
       ],
     "startingPos":
-      [250, 250]
+      [200, 300]
   },
   "6": {
 
@@ -9780,17 +9773,6 @@ class Player extends _entity__WEBPACK_IMPORTED_MODULE_2__["default"] {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Player);
-
-/***/ }),
-
-/***/ "./src/player1.js":
-/*!************************!*\
-  !*** ./src/player1.js ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/brian/Desktop/bright-night/src/player1.js'");
 
 /***/ }),
 
