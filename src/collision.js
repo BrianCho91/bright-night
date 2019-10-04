@@ -52,6 +52,12 @@ class Collision {
       if (this.collidePlatLeft(entity, tileX, tileY)) return;
       if (this.collidePlatRight(entity, tileX + 25, tileY)) return;
     }
+    else if (value === 3 || value === 4) {
+      if (this.collidePlatTopHazard(entity, tileX, tileY)) return;
+      if (this.collidePlatBotHazard(entity, tileX, tileY + 25)) return;
+      if (this.collidePlatLeftHazard(entity, tileX, tileY)) return;
+      if (this.collidePlatRightHazard(entity, tileX + 25, tileY)) return;
+    }
     else if (value === 9) {
       if (this.collidePlatTopFin(entity, tileX, tileY)) return;
       if (this.collidePlatBotFin(entity, tileX, tileY + 25)) return;
@@ -182,6 +188,73 @@ class Collision {
       // console.log('left')
       // entity.setPastRight(tileX - 0.01)
       this.game.changeLevel()
+      entity.setRight(tileX - 0.01)
+      // console.log(tileX)
+      entity.velX = 0
+      return true
+    }
+    return false;
+  }
+
+  collidePlatTopHazard(entity, tileX, tileY) {
+    // console.log('top')
+    // debugger
+    // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
+    if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+      // if (entity.getBot() > tileY) {
+      console.log('top')
+      // debugger
+      this.game.die()
+      // entity.setPastBot(tileY -0.01)
+      entity.setBot(tileY - 0.01);
+      entity.velY = 0;
+      // debugger
+      // console.log(tileY)
+      return true
+    }
+    return false;
+  }
+
+  collidePlatRightHazard(entity, tileX, tileY) {
+    // if (entity.getLeft() > tileX && entity.getPastLeft() <= tileX) {
+    // console.log('hit')
+    if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+
+      // console.log('right')
+      // debugger
+      // entity.setPastLeft(tileX + 0.01)
+      this.game.die()
+      entity.setLeft(tileX + 0.01)
+      entity.velX = 0;
+      // debugger
+      // console.log(tileX)
+      return true
+    }
+    return false
+  }
+
+  collidePlatBotHazard(entity, tileX, tileY) {
+
+    // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
+    if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
+      // console.log('bot')
+      // entity.setPastTop(tileY + 0.01)
+      this.game.die()
+      entity.setTop(tileY + 0.01);
+      // console.log(tileY)
+      entity.velY = 0;
+      return true;
+    }
+    return false;
+  }
+
+  collidePlatLeftHazard(entity, tileX, tileY) {
+    // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
+    // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
+    if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
+      // console.log('left')
+      // entity.setPastRight(tileX - 0.01)
+      this.game.die()
       entity.setRight(tileX - 0.01)
       // console.log(tileX)
       entity.velX = 0

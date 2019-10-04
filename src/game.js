@@ -57,7 +57,8 @@ class Game {
     this.player.draw(ctx)
     this.map.tiles.forEach(tile => {
       // debugger
-      tile.star ? tile.draw(ctx) : tile.draw(ctx)
+      // tile.star ? tile.draw(ctx) : tile.draw(ctx)
+      tile.draw(ctx)
     })
     // this.map.render(ctx)
 
@@ -138,6 +139,18 @@ class Game {
       this.map.tiles = [];
       this.map.create()
     } 
+  }
+
+  die() {
+    this.deathCount += 1
+    this.startingPos = levels[this.level].startingPos
+    // if (this.map.mode === "black") this.map.flipTiles()
+    this.map = new Map(levels[this.level].tiles, this, this.ctx);
+    this.player = new Player(this.startingPos[0], this.startingPos[1], this.map);
+    this.controller = new Controller(this.player, this.map, this.ctx, this);
+    this.collision = new Collision(this.map, this, this.player)
+    this.map.tiles = [];
+    this.map.create() 
   }
 
 }

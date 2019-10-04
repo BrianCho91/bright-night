@@ -1,5 +1,6 @@
 import Tile from './tile';
 import Star from './star';
+import Spike from './spike'
 import { levels } from './level'
 
 class Map {
@@ -38,6 +39,18 @@ class Map {
           // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
           this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
+        }
+        if (tile === 3) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black"))
+        }
+        if (tile === 4) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey"))
         }
         if (tile === 9) {
           let height = 20

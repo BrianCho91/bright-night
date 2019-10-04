@@ -12,8 +12,9 @@ class Player extends Entity {
     this.velX = 0;
     this.maxVelX = 3;
     this.velY = 0;
-    this.maxVelY = 6;
-    this.gravity = 3;
+    this.maxVelY = 8;
+    this.gravity = 5;
+    this.speedY = 0
     this.jumping = false
     this.map = map
     this.right = true
@@ -109,7 +110,7 @@ class Player extends Entity {
 
   jump() {
     // if (this.pos.y === 600 - this.height)
-      if (!this.jumping) {
+      if (!this.jumping && this.speedY === 0) {
         this.velY = -this.maxVelY
         this.jumping = true
     }
