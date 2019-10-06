@@ -87,7 +87,7 @@ class Game {
       ctx.fillRect(142, 53, 1, 9)
       ctx.fillRect(145, 53, 1, 9)
     } else {
-      (this.volume === false) ? this.volumeOn(this.ctx) : this.volumeOff(this.ctx)
+      this.volume === false ? this.volumeOff(this.ctx) : this.volumeOn(this.ctx)
       ctx.font = "25px Roboto";
       ctx.fillStyle = "white"
       ctx.fillText("Level: " + this.level, 30, 54)
@@ -167,11 +167,11 @@ class Game {
     if (this.map.mode === "white") {
       ctx.fillStyle = "black"
       ctx.font = '30px FontAwesome';
-      ctx.fillText('\uf028', 6, 27, 25, 15);
+      ctx.fillText('\uf028', 30, 27, 25, 15);
     } else {
       ctx.fillStyle = "white"
       ctx.font = '30px FontAwesome';
-      ctx.fillText('\uf028', 6, 27, 25, 15);
+      ctx.fillText('\uf028', 30, 27, 25, 15);
     }
   }
 
@@ -179,11 +179,11 @@ class Game {
     if (this.map.mode === "white") {
       ctx.fillStyle = "black"
       ctx.font = '30px FontAwesome';
-      ctx.fillText('\uf026', 6, 27, 25, 15);
+      ctx.fillText('\uf026', 30, 27, 25, 15);
     } else {
       ctx.fillStyle = "white"
       ctx.font = '30px FontAwesome';
-      ctx.fillText('\uf026', 6, 27, 25, 15);
+      ctx.fillText('\uf026', 30, 27, 25, 15);
     }
   }
 

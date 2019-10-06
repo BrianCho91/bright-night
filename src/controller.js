@@ -66,18 +66,19 @@ class Controller {
           // debugger
           this.map.flipMap();
           this.map.flipTiles()
+          break;
 
         case 77: // m
-        const audio = document.getElementById('audio');
+          const audio = document.getElementById('audio');
           if (this.game.volume === true) {
             this.game.volume = false;
-            
+
             audio.pause();
           } else {
             this.game.volume = true
             audio.play();
           }
-
+          break;
         // case 38 && 39: // doesnt work
         //   console.log('upright')
         //   break;

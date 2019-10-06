@@ -11,6 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   list-style-type: none;
+  margin-top: 20px;
 }
 
 img#volume-up {
@@ -18,6 +19,20 @@ img#volume-up {
   height: 20px;
 }
 
-canvas {
-  
+.sub-game {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+}
+
+.links {
+  margin-top: 30px;
+  display: flex;
+}
+
+.fa {
+  color: black;
+  font-size: 40px; 
+  margin-right: 20px;
 }
