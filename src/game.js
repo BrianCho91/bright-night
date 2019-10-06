@@ -19,13 +19,14 @@ class Game {
     this.player = new Player(this.startingPos[0], this.startingPos[1], this.map);
     // this.map = new Map(this)
     // debugger
-    this.controller = new Controller(this.player, this.map, this.ctx, this);
+    this.controller = new Controller(this.player, this.map, this, this.ctx);
     this.collision = new Collision(this.map, this, this.player)
     this.tiles = [];
     this.color = "black"
     // this.gameOver = true
     this.deathCount = 0
     this.mode = "white"
+    this.volume = false
     // // this.controller = new Controller(this.player, this.map, ctx)
     // // this.keyboardHandlers(ctx)
     // this.render(ctx);
@@ -37,7 +38,7 @@ class Game {
     this.startingPos = levels[this.level].startingPos
     this.map = new Map(levels[this.level].tiles, this, this.ctx);
     this.player = new Player(this.startingPos[0], this.startingPos[1], this.map);
-    this.controller = new Controller(this.player, this.map, this.ctx, this);
+    this.controller = new Controller(this.player, this.map, this, this.ctx);
     this.collision = new Collision(this.map, this, this.player)
     this.map.tiles = [];
     this.map.create()
@@ -46,7 +47,7 @@ class Game {
   draw(ctx) {
     // debugger
     if (this.map.mode === "white") {
-      ctx.clearRect(0, 0, 1000, 600) 
+      ctx.clearRect(0, 0, 1000, 600)
     } else {
       ctx.fillStyle = "black"
       ctx.fillRect(0, 0, 1000, 600)
@@ -63,9 +64,14 @@ class Game {
     // this.map.render(ctx)
 
     if (this.map.mode === "white") {
+      ctx.fillStyle = "black"
+      this.volume === false ? this.volumeOff(this.ctx) : this.volumeOn(this.ctx)
+
       ctx.font = "25px Roboto";
       ctx.fillStyle = "black"
       ctx.fillText("Level: " + this.level, 30, 54)
+      ctx.font = "italic 14px Roboto";
+      ctx.fillText(`"${levels[this.level].levelText}"`, 30, 80)
 
       ctx.font = "25px Roboto"; // death counter
       ctx.fillText(this.deathCount, 165, 54)
@@ -73,17 +79,20 @@ class Game {
       ctx.fillStyle = "black"
       ctx.fillRect(130, 35, 25, 15) // head
       ctx.fillRect(135, 50, 15, 8) // teeth
-      ctx.fillStyle = "white" 
+      ctx.fillStyle = "white"
       ctx.fillRect(136, 39, 5, 6) // eyes
       ctx.fillRect(144, 39, 5, 6)
-      
+
       ctx.fillRect(139, 53, 1, 9) // teeth
       ctx.fillRect(142, 53, 1, 9)
       ctx.fillRect(145, 53, 1, 9)
     } else {
+      (this.volume === false) ? this.volumeOn(this.ctx) : this.volumeOff(this.ctx)
       ctx.font = "25px Roboto";
       ctx.fillStyle = "white"
       ctx.fillText("Level: " + this.level, 30, 54)
+      ctx.font = "italic 14px Roboto";
+      ctx.fillText(`"${levels[this.level].levelText}"`, 30, 80)
 
       ctx.font = "25px Roboto"; // death counter
       ctx.fillText(this.deathCount, 165, 54)
@@ -118,6 +127,7 @@ class Game {
 
     this.gameOver()
     this.draw(this.ctx)
+
     // this.tiles.forEach(tile => tile.update())
     this.player.update(dt)
     this.collision.isColliding(this.player)
@@ -138,7 +148,7 @@ class Game {
       this.collision = new Collision(this.map, this, this.player)
       this.map.tiles = [];
       this.map.create()
-    } 
+    }
   }
 
   die() {
@@ -150,8 +160,33 @@ class Game {
     this.controller = new Controller(this.player, this.map, this.ctx, this);
     this.collision = new Collision(this.map, this, this.player)
     this.map.tiles = [];
-    this.map.create() 
+    this.map.create()
   }
+
+  volumeOn(ctx) {
+    if (this.map.mode === "white") {
+      ctx.fillStyle = "black"
+      ctx.font = '30px FontAwesome';
+      ctx.fillText('\uf028', 6, 27, 25, 15);
+    } else {
+      ctx.fillStyle = "white"
+      ctx.font = '30px FontAwesome';
+      ctx.fillText('\uf028', 6, 27, 25, 15);
+    }
+  }
+
+  volumeOff(ctx) {
+    if (this.map.mode === "white") {
+      ctx.fillStyle = "black"
+      ctx.font = '30px FontAwesome';
+      ctx.fillText('\uf026', 6, 27, 25, 15);
+    } else {
+      ctx.fillStyle = "white"
+      ctx.font = '30px FontAwesome';
+      ctx.fillText('\uf026', 6, 27, 25, 15);
+    }
+  }
+
 
 }
 

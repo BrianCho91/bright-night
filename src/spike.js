@@ -1,5 +1,5 @@
 class Spike {
-  constructor(ctx, posX, posY, color) {
+  constructor(ctx, posX, posY, color, upsideDown) {
     // // debugger
     this.spike = true
     this.ctx = ctx
@@ -8,6 +8,7 @@ class Spike {
       y: posY
     }
     this.color = color
+    this.upsideDown = upsideDown
     // this.mode = "black"
     // this.mode === "black" ? this.color = "black" : this.color = "lightgrey"
     // this.width = width,
@@ -31,11 +32,21 @@ class Spike {
   }
 
   draw(ctx, posX, posY) {
+    if (this.upsideDown === false) {
     ctx.fillStyle = this.color
+    ctx.fillRect(this.pos.x, this.pos.y + 12, 25, 13)
 
     for (let i = this.pos.x + 2; i < this.pos.x + 25; i += 4) {
       ctx.fillRect(i, this.pos.y, 2, 25)
-    }
+    } 
+  } else {
+    ctx.fillStyle = this.color
+    ctx.fillRect(this.pos.x, this.pos.y, 25, 12)
+
+    for (let i = this.pos.x + 2; i < this.pos.x + 25; i += 4) {
+      ctx.fillRect(i, this.pos.y, 2, 25)
+    } 
+  }
     // ctx.fillRect(this.pos.x + 25, this.pos.y, 1, 25)
     // if (this.color === "black") {
     //   // ctx.fillStyle = this.color

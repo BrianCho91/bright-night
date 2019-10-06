@@ -72,7 +72,7 @@ class Collision {
     // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
     if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
     // if (entity.getBot() > tileY) {
-      console.log('top')
+      // console.log('top')
       // entity.setPastBot(tileY -0.01)
       entity.setBot(tileY - 0.001);
       entity.velY = 0;
@@ -89,7 +89,7 @@ class Collision {
       // console.log('hit')
     if (entity.getLeft() < tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
       
-      console.log('right')
+      // console.log('right')
       // debugger
       // entity.setPastLeft(tileX + 0.01)
       entity.setLeft(tileX + 0.01)
@@ -106,7 +106,7 @@ class Collision {
 
     // if (entity.getTop() < tileY && entity.getPastTop() >= tileY) {
     if (entity.getTop() < tileY && entity.getTop() > tileY - 24 && entity.getLeft() != tileX && entity.getRight() > tileX ) {
-      console.log('bot')
+      // console.log('bot')
       // entity.setPastTop(tileY + 0.01)
       entity.setTop(tileY + 0.01);
       // console.log(tileY)
@@ -120,7 +120,7 @@ class Collision {
     // if (entity.getRight() > tileX && entity.getPastRight() <= tileX) {
     // if (entity.getRight() > tileX && entity.getTop() < tileY + 24 && entity.getBot() > tileY) { 
       if (entity.getRight() > tileX && entity.getRight() < tileX + 24 && entity.getTop() < tileY + 24 && entity.getBot() > tileY) {
-      console.log('left')
+      // console.log('left')
       // entity.setPastRight(tileX - 0.01)
       entity.setRight(tileX - 0.01)
       // console.log(tileX)
@@ -136,7 +136,7 @@ class Collision {
     // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
     if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
       // if (entity.getBot() > tileY) {
-      console.log('top')
+      // console.log('top')
       // debugger
       this.game.changeLevel()
       // entity.setPastBot(tileY -0.01)
@@ -203,7 +203,7 @@ class Collision {
     // if (entity.getBot() > tileY && entity.getPastBot() <= tileY) {
     if (entity.getBot() > tileY && entity.getBot() < tileY + 24 && entity.getLeft() != tileX && entity.getRight() > tileX) {
       // if (entity.getBot() > tileY) {
-      console.log('top')
+      // console.log('top')
       // debugger
       this.game.die()
       // entity.setPastBot(tileY -0.01)

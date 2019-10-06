@@ -44,13 +44,19 @@ class Map {
           // let height = 20
           // blackTiles.push(new Tile(pos, height, "red", this.game))
           // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black"))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", false))
         }
         if (tile === 4) {
           // let height = 20
           // blackTiles.push(new Tile(pos, height, "red", this.game))
           // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey"))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey", false))
+        }
+        if (tile === 5) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", true))
         }
         if (tile === 9) {
           let height = 20

@@ -1,16 +1,17 @@
 import Map from './map';
 
 class Controller {
-  constructor(player, map, ctx) {
+  constructor(player, map, game, ctx) {
     this.player = player;
     this.map = map;
     this.ctx = ctx
+    this.game = game
     // this.keyboardHandlers = this.keyboardHandlers.bind(this);
 
     // this.keyboardHandlers();
-  
 
-  // keyboardHandlers() {
+
+    // keyboardHandlers() {
 
     // document.addEventListener("keypress", (e) => {
     //   if (e.keyCode === 38 || 87) {
@@ -31,11 +32,11 @@ class Controller {
             this._timeout = setTimeout(() => {
               if (this.player.jumping === true)
                 this.player.comeDown()
-                // this.player.jumping = false
+              // this.player.jumping = false
             }, 300)
           }
           break;
-          
+
         // case 38 && 87: // up arrow
         //   // console.log("w")
 
@@ -65,6 +66,17 @@ class Controller {
           // debugger
           this.map.flipMap();
           this.map.flipTiles()
+
+        case 77: // m
+        const audio = document.getElementById('audio');
+          if (this.game.volume === true) {
+            this.game.volume = false;
+            
+            audio.pause();
+          } else {
+            this.game.volume = true
+            audio.play();
+          }
 
         // case 38 && 39: // doesnt work
         //   console.log('upright')
@@ -97,7 +109,7 @@ class Controller {
           // console.log("w")
           // if (this.player.jumping)
           // this.player.jumping = false
-            this.player.comeDown()
+          this.player.comeDown()
           break;
 
         // case 40 && 83: // down arrow

@@ -13,6 +13,11 @@ body {
   list-style-type: none;
 }
 
+img#volume-up {
+  width: 20px;
+  height: 20px;
+}
+
 canvas {
   
 }
