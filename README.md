@@ -6,7 +6,7 @@
 
 ## Link
 
-* [BrightNight](briancho91.github.io/bright-night)
+* [BrightNight](https://briancho91.github.io/bright-night/)
 
 ## Custom build physics
 
