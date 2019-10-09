@@ -8,7 +8,7 @@
 
 * [BrightNight](https://briancho91.github.io/bright-night/)
 
-## Custom build physics
+## Custom built physics
 
 * Includes features to check for object collision on the character, tiles, spikes, and stars.
 
