@@ -5,7 +5,6 @@ class Collision {
     this.map = map
     this.game = game
     this.level = map.dupeLevel
-    // console.log(map)
   }
 
   isColliding(entity) {
