@@ -1,5 +1,3 @@
-import { detectCollisionLeft } from './collision';
-import Map from './map';
 import Entity from './entity';
 
 class Player extends Entity {
@@ -21,14 +19,12 @@ class Player extends Entity {
   }
 
     draw(ctx) {
-    // console.log('j')
     if (this.map.mode === "white") {
       if (this.right === true) {
         ctx.fillStyle = "black";
         ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
         ctx.fillStyle = "white";
         ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
-        // ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
         ctx.fillStyle = "black"
         ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
         ctx.fillStyle = "white"
@@ -43,7 +39,6 @@ class Player extends Entity {
         ctx.fillStyle = "black";
         ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
         ctx.fillStyle = "white";
-        // ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
         ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
         ctx.fillStyle = "black"
         ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
@@ -62,7 +57,6 @@ class Player extends Entity {
         ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
         ctx.fillStyle = "black";
         ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
-        // ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
         ctx.fillStyle = "white"
         ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
         ctx.fillStyle = "black"
@@ -77,7 +71,6 @@ class Player extends Entity {
         ctx.fillStyle = "white";
         ctx.fillRect(this.pos.x, this.pos.y + 10, this.width, 11) // body
         ctx.fillStyle = "black";
-        // ctx.fillRect(this.pos.x + 4, this.pos.y + 13, 1, 8) // arm
         ctx.fillRect(this.pos.x + 20, this.pos.y + 13, 1, 8)
         ctx.fillStyle = "white"
         ctx.fillRect(this.pos.x + 2, this.pos.y + 1, this.width - 4, 8) // face outline
@@ -95,10 +88,6 @@ class Player extends Entity {
 
   moveLeft() {
     // debugger
-    // if (this.map.collidingWithMap(this.topLeft)) {
-    //   console.log('hi')  
-    //   return
-    // }
     this.right = false
     this.velX = -this.maxVelX
   }
@@ -109,7 +98,6 @@ class Player extends Entity {
   }
 
   jump() {
-    // if (this.pos.y === 600 - this.height)
       if (!this.jumping && this.speedY === 0) {
         this.velY = -this.maxVelY
         this.jumping = true
@@ -117,7 +105,6 @@ class Player extends Entity {
   }
 
   comeDown() {
-    // this.jumping = false
     this.velY = this.gravity
   }
 
@@ -126,16 +113,11 @@ class Player extends Entity {
   }
 
   update(dt) {
-    // console.log(this.pos)
     if (!dt) return
 
     this.pos.x += this.velX
     this.pos.x += this.velX
     this.pos.y += this.velY + this.gravity
-    // if (this.pos.y + this.height > 600) {
-    //   this.pos.y = 600 - this.height
-    // }
-
   }
 }
 

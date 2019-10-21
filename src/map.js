@@ -1,12 +1,9 @@
 import Tile from './tile';
 import Star from './star';
 import Spike from './spike'
-import { levels } from './level'
 
 class Map {
   constructor(level, game, ctx) {
-    // debugger
-    // this.numLevel = 1
     // debugger
     this.level = level
     this.dupeLevel = this.level.slice(0)
@@ -18,8 +15,6 @@ class Map {
 
   create() {
     // debugger
-    let blackTiles = [];
-    let whiteTiles = [];
     this.tiles = []
     // debugger
     this.dupeLevel.forEach((tile, idx) => {
@@ -31,44 +26,27 @@ class Map {
         let width = 25;
         let height = 25;
         if (tile === 1) {
-          // blackTiles.push(new Tile(pos, width, height, "black", this.game))
           // debugger
           this.tiles.push(new Tile(pos, width, height, "black", this.game))
         }
         if (tile === 2) {
-          // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
           this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
         }
         if (tile === 3) {
-          // let height = 20
-          // blackTiles.push(new Tile(pos, height, "red", this.game))
-          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
           this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", false))
         }
         if (tile === 4) {
-          // let height = 20
-          // blackTiles.push(new Tile(pos, height, "red", this.game))
-          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
           this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey", false))
         }
         if (tile === 5) {
-          // let height = 20
-          // blackTiles.push(new Tile(pos, height, "red", this.game))
-          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
           this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", true))
         }
         if (tile === 9) {
-          let height = 20
-          let star = true
-          // blackTiles.push(new Tile(pos, height, "red", this.game))
-          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
           this.tiles.push(new Star(this.ctx, pos.x, pos.y))
         }
       }
     })
-    // console.log(blackTiles)
-    // return blackTiles;
     return this.tiles
   }
 
@@ -85,40 +63,6 @@ class Map {
   }
 
   flipMap() {
-
-    // for (let i = 0; i < this.level.length; i++) {
-    //   if (this.mode === "white") {
-    //     if (this.level[i] === 1) {
-    //       this.level[i].color = "white"
-    //   } else if (this.level[i] === 2) {
-    //       this.level[i] = "grey"
-    //     }
-    //   } else {
-    //     if (this.level[i] === 1) {
-    //       this.level[i].color = "white"
-    //     } else if (this.level[i] === 2) {
-    //       this.level[i] = "lightgrey"
-    //     }
-    //   }
-
-    // }
-
-    // this.level.forEach(tile => {
-    //   // debugger
-    //   tile === 1 ? tile = 2 : tile = 1
-    //   tile === 2 ? tile = 1 : tile = 2
-    // })
-    // this.tiles = [];
-    // this.create();
-
-    // this.tiles.forEach(tile => {
-    //   if (tile.color === "black") {
-    //     tile.color = "lightgrey"
-    //   } else if (tile.color === "lightgrey") {
-    //     tile.color = "black"
-    //   }
-    // })
-
     this.tiles.forEach(tile => {
       if (this.mode === "white") {
         if (tile.color === "black") {
