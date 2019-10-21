@@ -30,65 +30,41 @@ class Map {
         }
         let width = 25;
         let height = 25;
-        switch (tile) {
-          case 1:
-            this.tiles.push(new Tile(pos, width, height, "black", this.game))
-            break;
-          case 2:
-            this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
-            break;
-          case 3:
-            this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", false))
-            break;
-          case 4:
-            this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey", false))
-            break;
-          case 5:
-            this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", true))
-            break;
-          case 9:
-            let height = 20
-            let star = true
-            this.tiles.push(new Star(this.ctx, pos.x, pos.y))
-            break;
-          default:
-            break;
+        if (tile === 1) {
+          // blackTiles.push(new Tile(pos, width, height, "black", this.game))
+          // debugger
+          this.tiles.push(new Tile(pos, width, height, "black", this.game))
         }
-        // if (tile === 1) {
-        //   // blackTiles.push(new Tile(pos, width, height, "black", this.game))
-        //   // debugger
-        //   this.tiles.push(new Tile(pos, width, height, "black", this.game))
-        // }
-        // if (tile === 2) {
-        //   // blackTiles.push(new Tile(pos, width, height, "green", this.game))
+        if (tile === 2) {
+          // blackTiles.push(new Tile(pos, width, height, "green", this.game))
 
-        //   this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
-        // }
-        // if (tile === 3) {
-        //   // let height = 20
-        //   // blackTiles.push(new Tile(pos, height, "red", this.game))
-        //   // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-        //   this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", false))
-        // }
-        // if (tile === 4) {
-        //   // let height = 20
-        //   // blackTiles.push(new Tile(pos, height, "red", this.game))
-        //   // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-        //   this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey", false))
-        // }
-        // if (tile === 5) {
-        //   // let height = 20
-        //   // blackTiles.push(new Tile(pos, height, "red", this.game))
-        //   // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-        //   this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", true))
-        // }
-        // if (tile === 9) {
-        //   let height = 20
-        //   let star = true
-        //   // blackTiles.push(new Tile(pos, height, "red", this.game))
-        //   // this.tiles.push(new Tile(pos, width, height, "red", this.game))
-        //   this.tiles.push(new Star(this.ctx, pos.x, pos.y))
-        // }
+          this.tiles.push(new Tile(pos, width, height, "lightgrey", this.game))
+        }
+        if (tile === 3) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", false))
+        }
+        if (tile === 4) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "lightgrey", false))
+        }
+        if (tile === 5) {
+          // let height = 20
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Spike(this.ctx, pos.x, pos.y, "black", true))
+        }
+        if (tile === 9) {
+          let height = 20
+          let star = true
+          // blackTiles.push(new Tile(pos, height, "red", this.game))
+          // this.tiles.push(new Tile(pos, width, height, "red", this.game))
+          this.tiles.push(new Star(this.ctx, pos.x, pos.y))
+        }
       }
     })
     // console.log(blackTiles)
